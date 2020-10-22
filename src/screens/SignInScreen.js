@@ -7,6 +7,7 @@ export default SignInScreen = ({navigation}) => {
     const [password, setPassword] = useState();
     const [loading, setLoading] = useState(false);
     return (
+        
       <Container>
              <HeaderGraphic>
                 <LeftCircle/> 
@@ -27,7 +28,7 @@ export default SignInScreen = ({navigation}) => {
                         keyboardType="email-address"
                         onChangeText={email => setEmail(email.trim())}
                         value={email}
-                    />
+                    /> 
                 </AuthContainer>
 
                 <AuthContainer>
