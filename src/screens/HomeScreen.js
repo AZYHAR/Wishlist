@@ -1,6 +1,7 @@
 import React, { useEffect, useContext }  from 'react';
 import { View, Text } from 'react-native';
 import { UserContext } from "../context/UserContext"
+import { FirebaseContext } from "../context/FirebaseContext"
 import firebase from 'firebase';
 
 export default HomeScreen = () => {
