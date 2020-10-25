@@ -26,8 +26,7 @@ const Firebase = {
            
             await db.collection("users").doc(uid).set({
                 username: user.username,
-                email: user.email,
-                profilePhotoUrl,
+                email: user.email
             });
 
           
