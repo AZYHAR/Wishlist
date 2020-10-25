@@ -19,7 +19,6 @@ export default HomeScreen = () => {
                   email: userInfo.email,
                   uid: user.uid,
                   username: userInfo.username,
-                  profilePhotoUrl: userInfo.profilePhotoUrl,
               });
           } else {
               setUser((state) => ({ ...state, isLoggedIn: false }));
