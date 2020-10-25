@@ -1,13 +1,15 @@
-import React, { createContext } from 'react'
+import React, { createContext } from "react";
 
-import * as firebase from 'firebase'
-import "firebase/auth"
-import "firebase/firestore"
-import {config} from '../config/firebase'
+import firebase from "firebase";
+import "firebase/auth";
+import "firebase/firestore";
+import config from "../config/firebase";
 
+const FirebaseContext = createContext();
 
-
-const FirebaseContext = createContext()
+if (!firebase.apps.length) {
+    firebase.initializeApp(config);
+}
 
 const db = firebase.firestore();
 
@@ -21,23 +23,22 @@ const Firebase = {
             await firebase.auth().createUserWithEmailAndPassword(user.email, user.password);
             const uid = Firebase.getCurrentUser().uid;
 
-            let profilePhotoUrl = "default";
-
+           
             await db.collection("users").doc(uid).set({
                 username: user.username,
                 email: user.email,
                 profilePhotoUrl,
             });
 
+          
             delete user.password;
 
-            return { ...user, profilePhotoUrl, uid };
+            return { ...user, uid };
         } catch (error) {
             console.log("Error @createUser: ", error.message);
         }
     },
 
-    
     getBlob: async (uri) => {
         return await new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
