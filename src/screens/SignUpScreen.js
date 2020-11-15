@@ -16,7 +16,7 @@ export default SignUpScreen = ({ navigation }) => {
     const signUp = async () => {
         setLoading(true);
 
-        const user = { username, email, password, profilePhoto };
+        const user = { username, email, password };
 
         try {
             const createdUser = await firebase.createUser(user);
