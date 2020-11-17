@@ -7,7 +7,7 @@ const UserProvider = (props) => {
         username: "",
         email: "",
         uid: "",
-        isLoggedIn: null
+        isLoggedIn: false
     })
 
     return <UserContext.Provider value={[state, setState]}>{props.children}</UserContext.Provider>

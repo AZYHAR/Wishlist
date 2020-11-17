@@ -1,17 +1,20 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+
 import AppStackScreens from "./src/routes/AppStackScreens"
 import { NavigationContainer } from '@react-navigation/native';
 
 import { UserProvider } from "./src/context/UserContext"
+import { FirebaseProvider } from './src/context/FirebaseContext';
+
 export default function App() {
   return (
-    <UserProvider>
-        <NavigationContainer>
-          <AppStackScreens/>  
-        </NavigationContainer>
-    </UserProvider>
-    
+    <FirebaseProvider>
+      <UserProvider>
+          <NavigationContainer>
+            <AppStackScreens/>  
+          </NavigationContainer>
+      </UserProvider>
+    </FirebaseProvider>
   );
 }
 

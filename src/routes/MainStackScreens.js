@@ -1,14 +1,16 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import SearchScreen from "../screens/SearchScreen";
 import WishlistScreen from "../screens/WishlistScreen";
+import AddWishlistScreen from "../screens/AddWishlistScreen";
 
 export default MainStackScreens = () => {
     const MainStack = createBottomTabNavigator();
-
+    const WishlistStack = createStackNavigator();
     const tabBarOptions = {
         showLabel: false
     }
@@ -44,9 +46,19 @@ export default MainStackScreens = () => {
 
     return (
         <MainStack.Navigator tabBarOptions={tabBarOptions} screenOptions={screenOptions}>
-            <MainStack.Screen name="Home" component={HomeScreen} />
-            <MainStack.Screen name="Search" component={SearchScreen} />
-            <MainStack.Screen name="Wishlist" component={WishlistScreen} />
+            <MainStack.Screen name="Wishlist">{()=> (
+                <WishlistStack.Navigator>
+                    <WishlistStack.Screen
+                        name="MyWishlists"
+                        component={WishlistScreen}
+                        />
+                    <WishlistStack.Screen
+                        name="AddWishlist"
+                        component={AddWishlistScreen}
+                        />
+                </WishlistStack.Navigator>
+            )}
+            </MainStack.Screen>
             <MainStack.Screen name="Profile" component={ProfileScreen} />
         </MainStack.Navigator>
     );

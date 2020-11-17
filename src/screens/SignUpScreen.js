@@ -1,12 +1,35 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import styled from "styled-components";
 import Text from '../components/Text'
 
-export default SignUpScreen = ({navigation}) => {
+import { FirebaseContext } from '../context/FirebaseContext'
+import { UserContext } from '../context/UserContext'
+
+export default SignUpScreen = ({ navigation }) => {
+    const [username, setUsername] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [loading, setLoading] = useState(false);
-    const [username, setUsername] = useState();
+    const firebase = useContext(FirebaseContext);
+    const [_, setUser] = useContext(UserContext);
+
+    const signUp = async () => {
+        setLoading(true);
+
+        const user = { username, email, password };
+
+        try {
+            const createdUser = await firebase.createUser(user);
+
+            setUser({ ...createdUser, isLoggedIn: true });
+        } catch (error) {
+            console.log("Error @signUp: ", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
     return (
       <Container>
              <HeaderGraphic>
@@ -24,7 +47,7 @@ export default SignUpScreen = ({navigation}) => {
                         autoCapitalize="none" 
                         autoCompleteType="email" 
                         autoCorrect={false} 
-                        onChangeText={username => setEmail(username.trim())}
+                        onChangeText={username => setUsername(username.trim())}
                         value={username}
                     />
                 </AuthContainer>
@@ -53,7 +76,7 @@ export default SignUpScreen = ({navigation}) => {
                 </AuthContainer>
             </Auth>
 
-            <SignUpContainer disabled={loading}>
+            <SignUpContainer onPress={signUp} disabled={loading}>
                 {loading ? (
                     <Loading/>
                 ) : (
