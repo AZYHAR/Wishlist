@@ -1,14 +1,16 @@
 import React, { useContext } from 'react';
 
 import { Entypo } from '@expo/vector-icons';
-import { Text } from '../context/UserContext';
+import { FirebaseContext } from '../context/FirebaseContext';
+import { Text } from 'react-native';
+import { UserContext } from '../context/UserContext';
 import styled from 'styled-components';
 
-// import { FirebaseContext } from '../context/FirebaseContext';
-
 export default ProfileScreen = () => {
-  // const [user, setUser] = useContext(UserContext);
-  const user = {
+  const [user, setUser] = useContext(UserContext);
+  const firebase = useContext(FirebaseContext);
+
+  const userTest = {
     profilePhotoUrl: 'default',
     username: 'Anton Zyhar',
     nickname: 'antonzyhar',
@@ -17,7 +19,15 @@ export default ProfileScreen = () => {
     location: 'Toronto, ON',
     birthday: 'April 20, 1969',
   };
-  // const firebase = useContext(FirebaseContext)
+
+  const logOut = async () => {
+    const loggedOut = await firebase.logOut();
+
+    if (loggedOut) {
+      setUser((state) => ({ ...state, isLoggedIn: false }));
+    }
+  };
+
   return (
     <Container>
       <ProfileHeadContainer
@@ -25,25 +35,28 @@ export default ProfileScreen = () => {
       />
       <ProfilePhoto
         source={
-          user.profilePhotoUrl === 'default'
+          userTest.profilePhotoUrl === 'default'
             ? require('../../assets/defaultProfilePhoto.jpg')
-            : { uri: user.profilePhotoUrl }
+            : { uri: userTest.profilePhotoUrl }
         }
       />
-      <UserName>{user.username}</UserName>
-      <UserNickname>@{user.nickname}</UserNickname>
-      <UserBio>{user.bio}</UserBio>
+      <UserName>{userTest.username}</UserName>
+      <UserNickname>@{userTest.nickname}</UserNickname>
+      <UserBio>{userTest.bio}</UserBio>
       <BirthdayLocation>
         <UserLocation>
           <Entypo name='location-pin' size={16} color='black' />
-          {' ' + user.location}
+          {' ' + userTest.location}
         </UserLocation>
         <UserBirthday>
           <Entypo name='calendar' size={16} color='black' />
-          {'  ' + user.birthday}
+          {'  ' + userTest.birthday}
         </UserBirthday>
       </BirthdayLocation>
       <DivideLine />
+      <Logout onPress={logOut}>
+        <Text>Log Out</Text>
+      </Logout>
     </Container>
   );
 };
@@ -135,4 +148,11 @@ const DivideLine = styled.View`
   top: 10px;
 
   border: 1px solid #e7b1b3;
+`;
+
+const Logout = styled.TouchableOpacity`
+  width: 90%;
+  height: 0px;
+  left: 45%;
+  top: 50%;
 `;
