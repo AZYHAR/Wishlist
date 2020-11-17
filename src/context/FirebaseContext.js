@@ -77,13 +77,16 @@ const Firebase = {
 
   updateUserInfo: async (user) => {
     try {
-      // get user data
-      // update user data
-      // const user = await db.collection('users').doc(uid).get();
+      const user = await db.collection('users').doc(uid).update({
+        bio: user.bio,
+        birthday: user.birthday,
+        location: user.location,
+        profilePhotoUrl: user.profilePhotoUrl,
+        userFirstName: user.userFirstName,
+        userLastName: user.userLastName,
+      });
 
-      if (user.exists) {
-        return user.data();
-      }
+      return user.data();
     } catch (error) {
       console.log('Error @getUserInfo: ', error);
     }
