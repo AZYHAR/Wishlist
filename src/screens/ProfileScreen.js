@@ -12,16 +12,6 @@ export default ProfileScreen = () => {
 
   console.log(user);
 
-  const userTest = {
-    profilePhotoUrl: 'default',
-    username: 'Anton Zyhar',
-    nickname: 'antonzyhar',
-    bio:
-      'Hello! My name is Anton Zyhar. I want to introduce my profile short bio intro',
-    location: 'Toronto, ON',
-    birthday: 'April 20, 1969',
-  };
-
   const logOut = async () => {
     const loggedOut = await firebase.logOut();
 
@@ -37,22 +27,22 @@ export default ProfileScreen = () => {
       />
       <ProfilePhoto
         source={
-          userTest.profilePhotoUrl === 'default'
+          user.profilePhotoUrl === 'default'
             ? require('../../assets/defaultProfilePhoto.jpg')
-            : { uri: userTest.profilePhotoUrl }
+            : { uri: user.profilePhotoUrl }
         }
       />
-      <UserName>{userTest.username}</UserName>
-      <UserNickname>@{userTest.nickname}</UserNickname>
-      <UserBio>{userTest.bio}</UserBio>
+      <UserName>{user.userFirstName + ' ' + user.userLastName}</UserName>
+      <UserNickname>@{user.username}</UserNickname>
+      <UserBio>{user.bio}</UserBio>
       <BirthdayLocation>
         <UserLocation>
           <Entypo name='location-pin' size={16} color='black' />
-          {' ' + userTest.location}
+          {' ' + user.location}
         </UserLocation>
         <UserBirthday>
           <Entypo name='calendar' size={16} color='black' />
-          {'  ' + userTest.birthday}
+          {'  ' + user.birthday}
         </UserBirthday>
       </BirthdayLocation>
       <DivideLine />

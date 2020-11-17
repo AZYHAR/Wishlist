@@ -1,7 +1,8 @@
-import React, { useEffect, useContext }  from 'react';
-import { View, Text } from 'react-native';
-import { UserContext } from "../context/UserContext"
-import { FirebaseContext } from "../context/FirebaseContext"
+import React, { useContext, useEffect } from 'react';
+import { Text, View } from 'react-native';
+
+import { FirebaseContext } from '../context/FirebaseContext';
+import { UserContext } from '../context/UserContext';
 import firebase from 'firebase';
 
 export default HomeScreen = () => {
@@ -9,22 +10,28 @@ export default HomeScreen = () => {
   const firebase = useContext(FirebaseContext);
 
   useEffect(() => {
-      setTimeout(async () => {
-          const user = firebase.getCurrentUser();
+    setTimeout(async () => {
+      const user = firebase.getCurrentUser();
 
-          if (user) {
-              const userInfo = await firebase.getUserInfo(user.uid);
+      if (user) {
+        const userInfo = await firebase.getUserInfo(user.uid);
 
-              setUser({
-                  isLoggedIn: true,
-                  email: userInfo.email,
-                  uid: user.uid,
-                  username: userInfo.username,
-              });
-          } else {
-              setUser((state) => ({ ...state, isLoggedIn: false }));
-          }
-      }, 500);
+        setUser({
+          username: userInfo.username,
+          email: userInfo.email,
+          uid,
+          isLoggedIn: true,
+          profilePhotoUrl: userInfo.profilePhotoUrl,
+          userFirstName: userInfo.userFirstName,
+          userLastName: userInfo.userLastName,
+          bio: userInfo.bio,
+          location: userInfo.location,
+          birthday: userInfo.birthday,
+        });
+      } else {
+        setUser((state) => ({ ...state, isLoggedIn: false }));
+      }
+    }, 500);
   }, []);
 
   return (
@@ -32,4 +39,4 @@ export default HomeScreen = () => {
       <Text>Home Screen</Text>
     </View>
   );
-}
+};
