@@ -10,6 +10,8 @@ export default ProfileScreen = () => {
   const [user, setUser] = useContext(UserContext);
   const firebase = useContext(FirebaseContext);
 
+  console.log(user);
+
   const userTest = {
     profilePhotoUrl: 'default',
     username: 'Anton Zyhar',
@@ -151,8 +153,6 @@ const DivideLine = styled.View`
 `;
 
 const Logout = styled.TouchableOpacity`
-  width: 90%;
-  height: 0px;
   left: 45%;
   top: 50%;
 `;
