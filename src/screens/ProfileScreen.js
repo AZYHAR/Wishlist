@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 
 import { Entypo } from '@expo/vector-icons';
 import { FirebaseContext } from '../context/FirebaseContext';
-import { Text } from 'react-native';
+import Text from '../components/Text';
 import { UserContext } from '../context/UserContext';
 import styled from 'styled-components';
 
@@ -45,7 +45,9 @@ export default ProfileScreen = ({ navigation }) => {
       </BirthdayLocation>
       <DivideLine />
       <Logout onPress={logOut}>
-        <Text>Log Out</Text>
+        <Text large light center>
+          Log Out
+        </Text>
       </Logout>
       <Edit onPress={() => navigation.navigate('EditUser')}>
         <Text>Edit user</Text>
@@ -121,8 +123,7 @@ const BirthdayLocation = styled.View`
 `;
 
 const UserLocation = styled.Text`
-  margin-right: 50px
-
+  margin-right: 50px;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
@@ -146,9 +147,27 @@ const DivideLine = styled.View`
 const Logout = styled.TouchableOpacity`
   left: 45%;
   top: 50%;
+  position: absolute;
+  width: 33%;
+  height: 8%;
+  left: 33%;
+  top: 627px;
+  padding-top: 8%;
+
+  background: #c0e5d5;
+  border-radius: 26px;
 `;
 
 const Edit = styled.TouchableOpacity`
-  left: 45%;
-  top: 35%;
+  padding-top: 4%;
+  padding-left: 17%;
+  position: absolute;
+  width: 91px;
+  height: 34px;
+  left: 70%;
+  top: 21%;
+
+  background: #c0e5d5;
+  border: 2px solid #c0e5d5;
+  border-radius: 25px;
 `;

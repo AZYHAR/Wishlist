@@ -80,6 +80,10 @@ const Firebase = {
       await db.collection('users').doc(uid).update({
         bio: user.newBio,
         userFirstName: user.firstName,
+        userLastName: user.lastName,
+        birthday: user.birth,
+        // location: user.loc,
+        // profilePhotoUrl: user.profilePhoto,
       });
     } catch (error) {
       console.log('Error @updateUserInfo: ', error);

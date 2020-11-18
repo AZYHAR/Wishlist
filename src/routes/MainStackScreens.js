@@ -13,6 +13,7 @@ export default MainStackScreens = () => {
   const ProfileStack = createStackNavigator();
   const tabBarOptions = {
     showLabel: false,
+    keyboardHidesTabBar: true,
   };
 
   const screenOptions = ({ route }) => ({
@@ -46,6 +47,7 @@ export default MainStackScreens = () => {
     <MainStack.Navigator
       tabBarOptions={tabBarOptions}
       screenOptions={screenOptions}
+      initialRouteName='Profile'
     >
       <MainStack.Screen name='Wishlist'>
         {() => (
@@ -71,6 +73,7 @@ export default MainStackScreens = () => {
             screenOptions={{
               headerShown: false,
             }}
+            initialRouteName='Profile'
           >
             <ProfileStack.Screen name='Profile' component={ProfileScreen} />
             <ProfileStack.Screen name='EditUser' component={EditUserInfo} />
