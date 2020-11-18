@@ -6,11 +6,9 @@ import { Text } from 'react-native';
 import { UserContext } from '../context/UserContext';
 import styled from 'styled-components';
 
-export default ProfileScreen = () => {
+export default ProfileScreen = ({ navigation }) => {
   const [user, setUser] = useContext(UserContext);
   const firebase = useContext(FirebaseContext);
-
-  console.log(user);
 
   const logOut = async () => {
     const loggedOut = await firebase.logOut();
@@ -49,6 +47,9 @@ export default ProfileScreen = () => {
       <Logout onPress={logOut}>
         <Text>Log Out</Text>
       </Logout>
+      <Edit onPress={() => navigation.navigate('EditUser')}>
+        <Text>Edit user</Text>
+      </Edit>
     </Container>
   );
 };
@@ -145,4 +146,9 @@ const DivideLine = styled.View`
 const Logout = styled.TouchableOpacity`
   left: 45%;
   top: 50%;
+`;
+
+const Edit = styled.TouchableOpacity`
+  left: 45%;
+  top: 35%;
 `;

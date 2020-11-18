@@ -73,10 +73,7 @@ export default MainStackScreens = () => {
             }}
           >
             <ProfileStack.Screen name='Profile' component={ProfileScreen} />
-            <ProfileStack.Screen
-              name='Edit User Info'
-              component={EditUserInfo}
-            />
+            <ProfileStack.Screen name='EditUser' component={EditUserInfo} />
           </ProfileStack.Navigator>
         )}
       </MainStack.Screen>
