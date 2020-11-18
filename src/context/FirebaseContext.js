@@ -1,92 +1,114 @@
-import React, { createContext } from "react";
+import 'firebase/auth';
+import 'firebase/firestore';
 
-import firebase from "firebase";
-import "firebase/auth";
-import "firebase/firestore";
-import config from "../config/firebase";
+import React, { createContext } from 'react';
+
+import config from '../config/firebase';
+import firebase from 'firebase';
 
 const FirebaseContext = createContext();
 
 if (!firebase.apps.length) {
-    firebase.initializeApp(config);
+  firebase.initializeApp(config);
 }
 
 const db = firebase.firestore();
 
 const Firebase = {
-    getCurrentUser: () => {
-        return firebase.auth().currentUser;
-    },
+  getCurrentUser: () => {
+    return firebase.auth().currentUser;
+  },
 
-    createUser: async (user) => {
-        try {
-            await firebase.auth().createUserWithEmailAndPassword(user.email, user.password);
-            const uid = Firebase.getCurrentUser().uid;
+  createUser: async (user) => {
+    try {
+      await firebase
+        .auth()
+        .createUserWithEmailAndPassword(user.email, user.password);
+      const uid = Firebase.getCurrentUser().uid;
 
-           
-            await db.collection("users").doc(uid).set({
-                username: user.username,
-                email: user.email
-            });
+      await db.collection('users').doc(uid).set({
+        username: user.username,
+        email: user.email,
+        profilePhotoUrl: user.profilePhotoUrl,
+        userFirstName: user.userFirstName,
+        userLastName: user.userLastName,
+        bio: user.bio,
+        location: user.location,
+        birthday: user.birthday,
+      });
 
-          
-            delete user.password;
+      delete user.password;
 
-            return { ...user, uid };
-        } catch (error) {
-            console.log("Error @createUser: ", error.message);
-        }
-    },
+      return { ...user, uid };
+    } catch (error) {
+      console.log('Error @createUser: ', error.message);
+    }
+  },
 
-    getBlob: async (uri) => {
-        return await new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
+  getBlob: async (uri) => {
+    return await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
 
-            xhr.onload = () => {
-                resolve(xhr.response);
-            };
+      xhr.onload = () => {
+        resolve(xhr.response);
+      };
 
-            xhr.onerror = () => {
-                reject(new TypeError("Network request failed."));
-            };
+      xhr.onerror = () => {
+        reject(new TypeError('Network request failed.'));
+      };
 
-            xhr.responseType = "blob";
-            xhr.open("GET", uri, true);
-            xhr.send(null);
-        });
-    },
+      xhr.responseType = 'blob';
+      xhr.open('GET', uri, true);
+      xhr.send(null);
+    });
+  },
 
-    getUserInfo: async (uid) => {
-        try {
-            const user = await db.collection("users").doc(uid).get();
+  getUserInfo: async (uid) => {
+    try {
+      const user = await db.collection('users').doc(uid).get();
 
-            if (user.exists) {
-                return user.data();
-            }
-        } catch (error) {
-            console.log("Error @getUserInfo: ", error);
-        }
-    },
+      if (user.exists) {
+        return user.data();
+      }
+    } catch (error) {
+      console.log('Error @getUserInfo: ', error);
+    }
+  },
 
-    logOut: async () => {
-        try {
-            await firebase.auth().signOut();
+  updateUserInfo: async (uid, user) => {
+    try {
+      await db.collection('users').doc(uid).update({
+        bio: user.newBio,
+        userFirstName: user.firstName,
+      });
+    } catch (error) {
+      console.log('Error @updateUserInfo: ', error);
+    }
+  },
 
-            return true;
-        } catch (error) {
-            console.log("Error @logOut: ", error);
-        }
+  logOut: async () => {
+    try {
+      await firebase.auth().signOut();
 
-        return false;
-    },
+      return true;
+    } catch (error) {
+      console.log('Error @logOut: ', error);
+    }
 
-    signIn: async (email, password) => {
-        return firebase.auth().signInWithEmailAndPassword(email, password);
-    },
+    return false;
+  },
+
+  signIn: async (email, password) => {
+    return firebase.auth().signInWithEmailAndPassword(email, password);
+  },
 };
 
 const FirebaseProvider = (props) => {
-    return <FirebaseContext.Provider value={Firebase}>{props.children}</FirebaseContext.Provider>;
+  return (
+    <FirebaseContext.Provider value={Firebase}>
+      {props.children}
+    </FirebaseContext.Provider>
+  );
 };
 
 export { FirebaseContext, FirebaseProvider };
