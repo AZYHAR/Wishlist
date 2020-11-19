@@ -142,7 +142,7 @@ export default EditUserInfo = ({ navigation }) => {
         autoCapitalize='none'
         autoCorrect={false}
         multiline
-        numberOfLines={4}
+        numberOfLines={3}
         maxLength={100}
         onChangeText={(bio) => setBio(bio)}
         value={newBio}
@@ -168,8 +168,8 @@ const FNameTitle = styled(Text)`
   position: absolute;
   width: 88px;
   height: 18px;
-  left: 5%;
-  top: 10%;
+  left: 20px;
+  top: 70px;
 
   font-style: normal;
   font-weight: normal;
@@ -190,7 +190,7 @@ const FNameField = styled.TextInput`
   width: 67%;
   height: 30px;
   left: 27%;
-  top: 9%;
+  top: 64px;
 
   background: #ffffff;
   border: 1px solid #9dc9c1;
@@ -202,7 +202,7 @@ const LNameTitle = styled(Text)`
   width: 88px;
   height: 18px;
   left: 5%;
-  top: 17%;
+  top: 120px;
 
   font-style: normal;
   font-weight: normal;
@@ -223,7 +223,7 @@ const LNameField = styled.TextInput`
   width: 67%;
   height: 30px;
   left: 27%;
-  top: 16%;
+  top: 113px;
 
   background: #ffffff;
   border: 1px solid #9dc9c1;
@@ -235,7 +235,7 @@ const BirthdayTitle = styled(Text)`
   width: 70px;
   height: 18px;
   left: 5%;
-  top: 24%;
+  top: 170px;
 
   font-style: normal;
   font-weight: normal;
@@ -251,12 +251,12 @@ const BirthdayTitle = styled(Text)`
 const BirthdayField = styled.TouchableOpacity`
   text-align: center;
   padding-left: 22%;
-  padding-top: 1.5%;
+  padding-top: 4px;
   position: absolute;
   width: 67%;
   height: 30px;
   left: 27%;
-  top: 23%;
+  top: 163px;
 
   background: #ffffff;
   border: 1px solid #9dc9c1;
@@ -268,7 +268,7 @@ const CountryTitle = styled(Text)`
   width: 70px;
   height: 18px;
   left: 5.5%;
-  top: 31%;
+  top: 219px;
 
   font-style: normal;
   font-weight: normal;
@@ -289,7 +289,7 @@ const LocationField = styled.View`
   height: 30px;
   width: 67%;
   left: 27%;
-  top: 30%;
+  top: 213px;
 
   background: #ffffff;
   border: 1px solid #9dc9c1;
@@ -300,8 +300,8 @@ const PhotoTitle = styled(Text)`
   position: absolute;
   width: 70px;
   height: 18px;
-  left: 5%;
-  top: 38%;
+  left: 7%;
+  top: 270px;
 
   font-style: normal;
   font-weight: normal;
@@ -323,7 +323,7 @@ const PhotoField = styled.TextInput`
   width: 67%;
   height: 30px;
   left: 27%;
-  top: 37%;
+  top: 263px;
 
   background: #ffffff;
   border: 1px solid #9dc9c1;
@@ -334,8 +334,8 @@ const BioTitle = styled(Text)`
   position: absolute;
   width: 70px;
   height: 18px;
-  left: 5%;
-  top: 45%;
+  left: 6.5%;
+  top: 320px;
 
   font-style: normal;
   font-weight: normal;
@@ -350,11 +350,12 @@ const BioField = styled.TextInput`
   text-align: center;
   padding-left: 5%;
   padding-right: 5%;
-  padding-top: 0.5%;
+  padding-top: 8px;
+  padding-bottom: 8px;
   position: absolute;
   width: 67%;
   left: 27%;
-  top: 44%;
+  top: 313px;
 
   background: #ffffff;
   border: 1px solid #9dc9c1;
@@ -366,7 +367,7 @@ const UNameTitle = styled(Text)`
   width: 70px;
   height: 18px;
   left: 5%;
-  top: 58%;
+  top: 413px;
 
   font-style: normal;
   font-weight: normal;
@@ -385,7 +386,7 @@ const UNameField = styled.TextInput`
   position: absolute;
   width: 67%;
   left: 27%;
-  top: 57%;
+  top: 404px;
 
   background: #ffffff;
   border: 1px solid #9dc9c1;
@@ -393,6 +394,15 @@ const UNameField = styled.TextInput`
 `;
 
 const SaveUserData = styled.TouchableOpacity`
-  left: 45%;
-  top: 70%;
+  padding-left: 33px;
+  padding-top: 17px;
+
+  position: absolute;
+  left: 33%;
+  width: 33%;
+  height: 55px;
+  top: 627px;
+
+  background: #c0e5d5;
+  border-radius: 26px;
 `;

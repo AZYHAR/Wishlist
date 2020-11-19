@@ -145,27 +145,26 @@ const DivideLine = styled.View`
 `;
 
 const Logout = styled.TouchableOpacity`
-  left: 45%;
-  top: 50%;
+  padding-top: 11px;
+  padding-left: 2px;
   position: absolute;
   width: 33%;
   height: 8%;
-  left: 33%;
   top: 627px;
-  padding-top: 8%;
+  left: 33%;
 
   background: #c0e5d5;
   border-radius: 26px;
 `;
 
 const Edit = styled.TouchableOpacity`
-  padding-top: 4%;
-  padding-left: 17%;
+  padding-top: 4px;
+  padding-left: 18%;
   position: absolute;
   width: 91px;
   height: 34px;
   left: 70%;
-  top: 21%;
+  top: 150px;
 
   background: #c0e5d5;
   border: 2px solid #c0e5d5;
