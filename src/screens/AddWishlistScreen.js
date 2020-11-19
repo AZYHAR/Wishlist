@@ -15,18 +15,22 @@ export default AddWishlist = () => {
           Create new wishlist
         </Text>
       </HeaderContainer>
+
       <List>
         <ListContainer>
           <Title>List Name</Title>
-          <ListName
+          <ListField
             onChangeText={(listName) => setListName(listName)}
             value={listName}
-          ></ListName>
+          ></ListField>
+        </ListContainer>
+        
+        <ListContainer>
           <Title>List Description</Title>
-          <ListDesc
+          <ListField
             onChangeText={(listDesc) => setListDesc(listDesc)}
             value={listDesc}
-          ></ListDesc>
+          ></ListField>
           <Create>
             <Text>Create</Text>
           </Create>
@@ -47,13 +51,12 @@ const Create = styled.TouchableOpacity`
 
 const Container = styled.View`
   flex: 1;
-  padding-top: 64px;
   padding-left: 32px;
 `;
 
 const HeaderContainer = styled.View`
-  flex-direction: row;
-  flex: 1;
+  margin-top: 75px;
+  
 `;
 
 const List = styled.View`
@@ -61,13 +64,13 @@ const List = styled.View`
 `;
 
 const ListContainer = styled.View`
-  bottom: 90%;
+  margin-bottom: 32px;
   right: 5%;
 `;
 
-const ListName = styled.TextInput`
+const ListField = styled.TextInput`
   border-bottom-color: #8e93a1;
-  border-bottom-width: 0.5px;
+  border-bottom-width: 1px;
   height: 48px;
   font-size: 16px;
 `;
@@ -80,9 +83,4 @@ const Title = styled(Text)`
   margin-top: 60px;
 `;
 
-const ListDesc = styled.TextInput`
-  border-bottom-color: #8e93a1;
-  border-bottom-width: 0.5px;
-  height: 48px;
-  font-size: 16px;
-`;
+
