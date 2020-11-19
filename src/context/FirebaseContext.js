@@ -34,6 +34,7 @@ const Firebase = {
         userLastName: user.userLastName,
         bio: user.bio,
         location: user.location,
+        locationCode: user.locationCode,
         birthday: user.birthday,
       });
 
@@ -82,8 +83,9 @@ const Firebase = {
         userFirstName: user.firstName,
         userLastName: user.lastName,
         birthday: user.birth,
-        // location: user.loc,
-        // profilePhotoUrl: user.profilePhoto,
+        location: user.countryName,
+        locationCode: user.countryCode,
+        profilePhotoUrl: user.profilePhoto,
       });
     } catch (error) {
       console.log('Error @updateUserInfo: ', error);

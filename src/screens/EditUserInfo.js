@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Text, View } from 'react-native';
 
 import { AntDesign } from '@expo/vector-icons';
+import CountryPicker from 'react-native-country-picker-modal';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { FirebaseContext } from '../context/FirebaseContext';
 import Moment from 'moment';
@@ -19,12 +20,19 @@ export default EditUserInfo = ({ navigation }) => {
   const [lastName, setLastName] = useState(user.userLastName);
   const [birth, setBirth] = useState(user.birthday);
   const [profilePhoto, setProfilePhoto] = useState(user.profilePhotoUrl);
-  const [loc, setLocation] = useState(user.loc);
 
   // Country
+  const [countryCode, setCountryCode] = useState(user.locationCode);
+  const [countryName, setCountryName] = useState(user.location);
+
+  const onSelect = (country) => {
+    console.log(country);
+    setCountryCode(country.cca2);
+    setCountryName(country.name);
+  };
 
   // date time
-  const [date, setDate] = useState(Date.parse(user.birthday)); // parse birthday of user
+  const [date, setDate] = useState(Date.parse(user.birthday));
   const [show, setShow] = useState(false);
 
   const onChange = (event, selectedDate) => {
@@ -41,7 +49,9 @@ export default EditUserInfo = ({ navigation }) => {
         firstName,
         lastName,
         birth,
-        // loc,
+        countryCode,
+        countryName,
+        profilePhoto,
       });
 
       // update user data
@@ -51,7 +61,9 @@ export default EditUserInfo = ({ navigation }) => {
         userFirstName: firstName,
         userLastName: lastName,
         birthday: birth,
-        // location: loc,
+        location: countryName,
+        locationCode: countryCode,
+        profilePhotoUrl: profilePhoto,
       });
     } catch (error) {
       alert(error.message);
@@ -62,17 +74,7 @@ export default EditUserInfo = ({ navigation }) => {
 
   return (
     <>
-      {/* <BioTitle>Bio: </BioTitle>
-      <BioField
-        maxlength='50'
-        multiline={true}
-        numberOfLines={3}
-        autoCapitalize='none'
-        autoCorrect={false}
-        onChangeText={(bio) => setBio(bio)}
-        value={newBio}
-      /> */}
-
+      {/* First Name */}
       <FNameTitle>First Name: </FNameTitle>
       <FNameField
         autoCapitalize='none'
@@ -81,6 +83,7 @@ export default EditUserInfo = ({ navigation }) => {
         value={firstName}
       />
 
+      {/* Last Name */}
       <LNameTitle>Last Name: </LNameTitle>
       <LNameField
         autoCapitalize='none'
@@ -108,13 +111,36 @@ export default EditUserInfo = ({ navigation }) => {
         />
       )}
 
-      {/* <LocationTitle>Location: </LocationTitle>
-      <LocationField
+      {/* Country */}
+      <CountryTitle>Location: </CountryTitle>
+      <LocationField>
+        <CountryPicker
+          {...{
+            countryCode: countryCode,
+            withCountryNameButton: true,
+            withFilter: true,
+            onSelect,
+          }}
+        />
+      </LocationField>
+
+      {/* PhotoURL */}
+      <PhotoTitle>Photo URL: </PhotoTitle>
+      <PhotoField
         autoCapitalize='none'
         autoCorrect={false}
-        onChangeText={(loc) => setLastName(loc}
-        value={location}
-      /> */}
+        onChangeText={(pPhoto) => setProfilePhoto(pPhoto.trim())}
+        value={profilePhoto}
+      />
+
+      {/* Bio */}
+      <BioTitle>Bio: </BioTitle>
+      <BioField
+        autoCapitalize='none'
+        autoCorrect={false}
+        onChangeText={(bio) => setBio(bio.trim())}
+        value={newBio}
+      />
 
       <SaveUserData onPress={updateData}>
         <Text>Save User</Text>
@@ -122,39 +148,6 @@ export default EditUserInfo = ({ navigation }) => {
     </>
   );
 };
-
-const LocationTitle = styled(Text)`
-  position: absolute;
-  width: 88px;
-  height: 18px;
-  left: 3.3%;
-  top: 31%;
-
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 16px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-
-  color: #000000;
-`;
-
-const LocationField = styled.TextInput`
-  text-align: center;
-  padding-left: 15px;
-  padding-right: 15px;
-  position: absolute;
-  width: 67%;
-  height: 30px;
-  left: 27%;
-  top: 9%;
-
-  background: #ffffff;
-  border: 1px solid #9dc9c1;
-  border-radius: 25px;
-`;
 
 const FNameTitle = styled(Text)`
   position: absolute;
@@ -255,30 +248,106 @@ const BirthdayField = styled.TouchableOpacity`
   border-radius: 25px;
 `;
 
-// const BioField = styled.TextInput`
-//   border: #8e93a1;
-//   border-radius: 15px;
-//   padding: 7px;
-//   top: 9%;
-//   width: 75%;
-//   left: 20%;
-// `;
+const CountryTitle = styled(Text)`
+  position: absolute;
+  width: 70px;
+  height: 18px;
+  left: 5.5%;
+  top: 31%;
 
-// const BioTitle = styled(Text)`
-//   left: 10%;
-//   top: 13%;
-//   width: 20%;
-//   color: #000000;
-//   font-size: 14px;
-//   font-weight: 300;
-//   width: 20%;
-// `;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
 
-const Container = styled.View`
-  flex: 1;
+  color: #000000;
+`;
+
+const LocationField = styled.View`
+  text-align: center;
+  padding-left: 22%;
+  position: absolute;
+  width: 67%;
+  height: 30px;
+  width: 67%;
+  left: 27%;
+  top: 30%;
+
+  background: #ffffff;
+  border: 1px solid #9dc9c1;
+  border-radius: 25px;
+`;
+
+const PhotoTitle = styled(Text)`
+  position: absolute;
+  width: 70px;
+  height: 18px;
+  left: 5%;
+  top: 38%;
+
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #000000;
+`;
+
+const PhotoField = styled.TextInput`
+  text-align: center;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 0.5%;
+  position: absolute;
+  width: 67%;
+  height: 30px;
+  left: 27%;
+  top: 37%;
+
+  background: #ffffff;
+  border: 1px solid #9dc9c1;
+  border-radius: 25px;
+`;
+
+const BioTitle = styled(Text)`
+  position: absolute;
+  width: 70px;
+  height: 18px;
+  left: 5%;
+  top: 45%;
+
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  display: flex;
+
+  color: #000000;
+`;
+
+const BioField = styled.TextInput`
+  text-align: center;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 0.5%;
+  position: absolute;
+  width: 67%;
+  height: 30px;
+  left: 27%;
+  top: 44%;
+
+  background: #ffffff;
+  border: 1px solid #9dc9c1;
+  border-radius: 25px;
 `;
 
 const SaveUserData = styled.TouchableOpacity`
   left: 45%;
-  top: 50%;
+  top: 70%;
 `;

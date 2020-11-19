@@ -25,7 +25,8 @@ export default SignUpScreen = ({ navigation }) => {
       userLastName: 'LastN',
       bio:
         'Hello! My name is ________. I want to introduce my profile short bio intro',
-      location: 'Toronto, ON',
+      location: 'Canada',
+      locationCode: 'CA',
       birthday: 'April 20, 1969',
     };
 

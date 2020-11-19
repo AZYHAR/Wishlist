@@ -33,6 +33,7 @@ export default SignInScreen = ({ navigation }) => {
         bio: userInfo.bio,
         location: userInfo.location,
         birthday: userInfo.birthday,
+        locationCode: userInfo.locationCode,
       });
     } catch (error) {
       alert(error.message);

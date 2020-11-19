@@ -13,6 +13,7 @@ const UserProvider = (props) => {
     UserLastName: '',
     bio: '',
     location: '',
+    locationCode: '',
     birthday: '',
   });
 
