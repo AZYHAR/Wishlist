@@ -20,6 +20,7 @@ export default EditUserInfo = ({ navigation }) => {
   const [lastName, setLastName] = useState(user.userLastName);
   const [birth, setBirth] = useState(user.birthday);
   const [profilePhoto, setProfilePhoto] = useState(user.profilePhotoUrl);
+  const [uname, setUName] = useState(user.username);
 
   // Country
   const [countryCode, setCountryCode] = useState(user.locationCode);
@@ -52,6 +53,7 @@ export default EditUserInfo = ({ navigation }) => {
         countryCode,
         countryName,
         profilePhoto,
+        uname,
       });
 
       // update user data
@@ -64,6 +66,7 @@ export default EditUserInfo = ({ navigation }) => {
         location: countryName,
         locationCode: countryCode,
         profilePhotoUrl: profilePhoto,
+        username: uname,
       });
     } catch (error) {
       alert(error.message);
@@ -138,8 +141,20 @@ export default EditUserInfo = ({ navigation }) => {
       <BioField
         autoCapitalize='none'
         autoCorrect={false}
-        onChangeText={(bio) => setBio(bio.trim())}
+        multiline
+        numberOfLines={4}
+        maxLength={100}
+        onChangeText={(bio) => setBio(bio)}
         value={newBio}
+      />
+
+      {/*  */}
+      <UNameTitle>Username: </UNameTitle>
+      <UNameField
+        autoCapitalize='none'
+        autoCorrect={false}
+        onChangeText={(uname) => setUName(uname)}
+        value={uname}
       />
 
       <SaveUserData onPress={updateData}>
@@ -338,9 +353,39 @@ const BioField = styled.TextInput`
   padding-top: 0.5%;
   position: absolute;
   width: 67%;
-  height: 30px;
   left: 27%;
   top: 44%;
+
+  background: #ffffff;
+  border: 1px solid #9dc9c1;
+  border-radius: 25px;
+`;
+
+const UNameTitle = styled(Text)`
+  position: absolute;
+  width: 70px;
+  height: 18px;
+  left: 5%;
+  top: 58%;
+
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  display: flex;
+
+  color: #000000;
+`;
+
+const UNameField = styled.TextInput`
+  text-align: center;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 0.5%;
+  position: absolute;
+  width: 67%;
+  left: 27%;
+  top: 57%;
 
   background: #ffffff;
   border: 1px solid #9dc9c1;

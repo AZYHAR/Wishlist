@@ -24,7 +24,7 @@ export default AddWishlist = () => {
             value={listName}
           ></ListField>
         </ListContainer>
-        
+
         <ListContainer>
           <Title>List Description</Title>
           <ListField
@@ -39,6 +39,7 @@ export default AddWishlist = () => {
     </Container>
   );
 };
+
 const Create = styled.TouchableOpacity`
   margin: 0 32px;
   top: 35px;
@@ -56,7 +57,6 @@ const Container = styled.View`
 
 const HeaderContainer = styled.View`
   margin-top: 75px;
-  
 `;
 
 const List = styled.View`
@@ -82,5 +82,3 @@ const Title = styled(Text)`
   font-weight: 300;
   margin-top: 60px;
 `;
-
-

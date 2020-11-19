@@ -86,6 +86,7 @@ const Firebase = {
         location: user.countryName,
         locationCode: user.countryCode,
         profilePhotoUrl: user.profilePhoto,
+        username: user.uname,
       });
     } catch (error) {
       console.log('Error @updateUserInfo: ', error);
