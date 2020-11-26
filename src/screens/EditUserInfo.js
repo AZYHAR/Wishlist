@@ -56,7 +56,6 @@ export default EditUserInfo = ({ navigation }) => {
         uname,
       });
 
-      await firebase.getWishlists(user.uid);
       // update user data
       setUser({
         ...user,

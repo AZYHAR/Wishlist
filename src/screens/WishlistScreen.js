@@ -1,14 +1,35 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
+import { FirebaseContext } from '../context/FirebaseContext';
 import Text from '../components/Text';
+import { UserContext } from '../context/UserContext';
 import styled from 'styled-components';
 
 export default WishlistScreen = ({ navigation }) => {
-  const [test, setTest] = useState();
-  const testing = () => {
-    setTest('Working!');
+  // get data
+  const [user, setUser] = useContext(UserContext);
+  const firebase = useContext(FirebaseContext);
+
+  const [wishList, setWishList] = useState([]);
+
+  const loadData = async () => {
+    var data;
+    try {
+      data = await firebase.getWishlists(user.uid);
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setWishList(data);
+    }
   };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  console.log(wishList);
+
   return (
     <Container>
       <HeaderContainer>
@@ -24,10 +45,6 @@ export default WishlistScreen = ({ navigation }) => {
           <Text XL>+</Text>
         </TouchableOpacity>
       </PlusSign>
-
-      <View>
-        <Text>{test}</Text>
-      </View>
     </Container>
   );
 };
@@ -50,8 +67,6 @@ const styles = StyleSheet.create({
 
 const Container = styled.View`
   flex: 1;
-  padding-top: 64px;
-  padding-left: 32px;
 `;
 
 const HeaderContainer = styled.View`

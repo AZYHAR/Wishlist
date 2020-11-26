@@ -97,16 +97,19 @@ const Firebase = {
   // pass uid - user id
   getWishlists: async (uid) => {
     try {
-      await db
+      var snapshot = await db
         .collection('wishlists')
         .where('uid', '==', uid)
-        .onSnapshot((querySnapshot) => {
-          var data = [];
-          querySnapshot.forEach((doc) => {
-            data.push(doc.data());
-          });
-          console.log(data);
-        });
+        .get();
+      // .onSnapshot((querySnapshot) => {
+      //   var data = [];
+      //   querySnapshot.forEach((doc) => {
+      //     data.push(doc.data());
+      //   });
+      //   console.log(data);
+      // });
+
+      return snapshot.docs.map((doc) => doc.data());
     } catch (error) {
       console.log('Error @getWishlists: ', error);
     }
