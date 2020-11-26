@@ -93,6 +93,31 @@ const Firebase = {
     }
   },
 
+  // get withlists
+  // pass uid - user id
+  getWishlists: async (uid) => {
+    try {
+      await db
+        .collection('wishlists')
+        .where('uid', '==', uid)
+        .onSnapshot((querySnapshot) => {
+          var data = [];
+          querySnapshot.forEach((doc) => {
+            data.push(doc.data());
+          });
+          console.log(data);
+        });
+    } catch (error) {
+      console.log('Error @getWishlists: ', error);
+    }
+  },
+
+  // get wishes of single wishlist
+
+  // update wishlist data
+
+  // update single wish data
+
   logOut: async () => {
     try {
       await firebase.auth().signOut();
