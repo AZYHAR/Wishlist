@@ -75,7 +75,6 @@ export default SignInScreen = ({ navigation }) => {
             autoCapitalize='none'
             autoCompleteType='password'
             autoCorrect={false}
-            autoFocus={true}
             secureTextEntry={true}
             onChangeText={(password) => setPassword(password.trim())}
             value={password}

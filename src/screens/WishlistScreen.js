@@ -9,9 +9,11 @@ import styled from 'styled-components';
 export default WishlistScreen = ({ navigation }) => {
   // get data
   const [user, setUser] = useContext(UserContext);
+  const [list, setWishList] = useState([]);
+  const [loading, setLoading] = useState(true);
   const firebase = useContext(FirebaseContext);
 
-  const [wishList, setWishList] = useState([]);
+
 
   const loadData = async () => {
     var data;
@@ -21,6 +23,7 @@ export default WishlistScreen = ({ navigation }) => {
       alert(error.message);
     } finally {
       setWishList(data);
+      setLoading(false);
     }
   };
 
@@ -28,23 +31,31 @@ export default WishlistScreen = ({ navigation }) => {
     loadData();
   }, []);
 
-  console.log(wishList);
+ console.log(list);
+
 
   return (
+    
     <Container>
-      <HeaderContainer>
-        <Text large bold>
-          My Wishlists
-        </Text>
-      </HeaderContainer>
-      <PlusSign>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('AddWishlist')}
-        >
-          <Text XL>+</Text>
-        </TouchableOpacity>
-      </PlusSign>
+        <HeaderContainer>
+          <Text large bold>
+            My Wishlists 
+          </Text>
+        </HeaderContainer>
+        <PlusSign>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('AddWishlist')}
+          >
+            <Text XL>+</Text>
+          </TouchableOpacity>
+        </PlusSign>
+      
+        {loading === true ? (
+                <Text>Loading... </Text>
+            ) : (
+                <Text>{list[0].listName}</Text>
+            )}
     </Container>
   );
 };
@@ -67,8 +78,13 @@ const styles = StyleSheet.create({
 
 const Container = styled.View`
   flex: 1;
+  padding-top: 64px;
+  padding-left: 32px;
 `;
 
+const FeedContainer = styled.View`
+ 
+`;
 const HeaderContainer = styled.View`
   flex-direction: row;
   flex: 1;
