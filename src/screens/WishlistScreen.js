@@ -33,13 +33,25 @@ export default WishlistScreen = ({ navigation }) => {
 
  console.log(list);
 
+ const renderList = ({ item }) => (
+   <ListContainer>
+     <ListHeaderContainer>
+       <ListInfoContainer>
+          <Text bold large>{item.listName}</Text>
+          <Text>{item.listDesc}</Text>
+          <Text>{item.createdOn}</Text>
+          <Text>{item.listItem.itemName}</Text>
+       </ListInfoContainer>
+     </ListHeaderContainer>
+   </ListContainer>
+ )
 
   return (
     
     <Container>
         <HeaderContainer>
           <Text large bold>
-            My Wishlists 
+            My Wishlists
           </Text>
         </HeaderContainer>
         <PlusSign>
@@ -50,11 +62,17 @@ export default WishlistScreen = ({ navigation }) => {
             <Text XL>+</Text>
           </TouchableOpacity>
         </PlusSign>
+        
       
         {loading === true ? (
                 <Text>Loading... </Text>
             ) : (
-                <Text>{list[0].listName}</Text>
+              
+              <FeedContainer>
+              
+                <Feed data={list} renderItem={renderList} keyExtractor={(item) => item.id.toString()}/>
+
+              </FeedContainer>
             )}
     </Container>
   );
@@ -82,6 +100,8 @@ const Container = styled.View`
   padding-left: 32px;
 `;
 
+const Feed = styled.FlatList``;
+
 const FeedContainer = styled.View`
  
 `;
@@ -100,3 +120,19 @@ const PlusSign = styled.View`
   top: 50px;
   border-color: #8b5fbf;
 `;
+
+const ListContainer = styled.View`
+  margin: 16px 16px 0 16px;
+  background-color: #ffffff;
+  border-radius: 6px;
+  padding: 8px;
+`
+const ListHeaderContainer = styled.View`
+  flex-direction: row;
+  margin-bottom: 16px;
+  align-items: center;
+`
+const ListInfoContainer = styled.View`
+  flex: 1;
+  margin: 0 16px;
+`
