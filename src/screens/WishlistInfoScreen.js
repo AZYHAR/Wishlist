@@ -4,12 +4,15 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Text from '../components/Text';
 import styled from 'styled-components';
 
-export default WishlistInfoScreen = () => {
+export default WishlistInfoScreen = (props) => {
   const [listName, setListName] = useState();
   const [listDesc, setListDesc] = useState();
 
+  const { route } = props 
+  const { item } = route.params
+
   return (
-  <Text>Info...</Text>
+  <Text>{item.listName}</Text>
 
   )
 }
