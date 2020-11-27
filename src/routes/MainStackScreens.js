@@ -6,6 +6,7 @@ import React from 'react';
 import WishlistScreen from '../screens/WishlistScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import WishlistInfoScreen from '../screens/WishlistInfoScreen';
 
 export default MainStackScreens = () => {
   const MainStack = createBottomTabNavigator();
@@ -52,17 +53,25 @@ export default MainStackScreens = () => {
       <MainStack.Screen name='Wishlist'>
         {() => (
           <WishlistStack.Navigator
-            screenOptions={{
-              headerShown: false,
-            }}
+            
           >
             <WishlistStack.Screen
               name='MyWishlists'
               component={WishlistScreen}
+              options={{
+                headerShown: false,
+                title: "Wishlists"
+            }}
             />
             <WishlistStack.Screen
               name='AddWishlist'
               component={AddWishlistScreen}
+              options={{ title: 'Create new wishlist' }}
+            />
+            <WishlistStack.Screen
+              name='WishListInfo'
+              component={WishlistInfoScreen}
+              options={{ title: 'Details' }}
             />
           </WishlistStack.Navigator>
         )}

@@ -35,6 +35,10 @@ export default WishlistScreen = ({ navigation }) => {
 
  const renderList = ({ item }) => (
    <ListContainer>
+    <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('WishListInfo')}
+          >
      <ListHeaderContainer>
        <ListInfoContainer>
           <Text bold large>{item.listName}</Text>
@@ -42,6 +46,7 @@ export default WishlistScreen = ({ navigation }) => {
           <Text>{item.listItem.itemName}</Text>
        </ListInfoContainer>
      </ListHeaderContainer>
+     </TouchableOpacity>
    </ListContainer>
  )
 
@@ -138,4 +143,5 @@ const ListHeaderContainer = styled.View`
 const ListInfoContainer = styled.View`
   flex: 1;
   margin: 0 16px;
+  top: 10px;
 `
