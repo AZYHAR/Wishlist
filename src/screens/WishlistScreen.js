@@ -39,7 +39,6 @@ export default WishlistScreen = ({ navigation }) => {
        <ListInfoContainer>
           <Text bold large>{item.listName}</Text>
           <Text>{item.listDesc}</Text>
-          <Text>{item.createdOn}</Text>
           <Text>{item.listItem.itemName}</Text>
        </ListInfoContainer>
      </ListHeaderContainer>
@@ -103,7 +102,9 @@ const Container = styled.View`
 const Feed = styled.FlatList``;
 
 const FeedContainer = styled.View`
- 
+  flex: 1;
+  bottom: 310px;
+  right: 20px;
 `;
 const HeaderContainer = styled.View`
   flex-direction: row;
@@ -123,9 +124,11 @@ const PlusSign = styled.View`
 
 const ListContainer = styled.View`
   margin: 16px 16px 0 16px;
-  background-color: #ffffff;
+  background-color: #dcd6f7;
   border-radius: 6px;
   padding: 8px;
+
+
 `
 const ListHeaderContainer = styled.View`
   flex-direction: row;

@@ -93,7 +93,7 @@ const Firebase = {
     }
   },
 
-  // get withlists
+  // get wishlists
   // pass uid - user id
   getWishlists: async (uid) => {
     try {
