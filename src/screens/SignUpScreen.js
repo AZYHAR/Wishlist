@@ -24,8 +24,7 @@ export default SignUpScreen = ({ navigation }) => {
       profilePhotoUrl: 'default',
       userFirstName: 'FirstN',
       userLastName: 'LastN',
-      bio:
-        'Hello! My name is ________. I want to introduce my profile short bio intro',
+      bio: 'Write something about yourself!',
       location: 'Canada',
       locationCode: 'CA',
       birthday: 'April 20, 1969',

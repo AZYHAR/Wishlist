@@ -20,9 +20,6 @@ const Firebase = {
   },
 
   createUser: async (user) => {
-    if(!user.email) {
-     
-    }
     try {
       await firebase
         .auth()
@@ -139,6 +136,16 @@ const Firebase = {
 
   signIn: async (email, password) => {
     return firebase.auth().signInWithEmailAndPassword(email, password);
+  },
+  
+  passwordReset: async (email) => {
+    const emailExists = firebase.auth().fetchSignInMethodsForEmail(email);
+    if(emailExists) {
+      alert('A recovery link has been sent to your email.')
+      return firebase.auth().sendPasswordResetEmail(email)
+    }     
+    
+    
   },
   
 };
