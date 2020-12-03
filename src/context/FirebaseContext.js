@@ -110,6 +110,18 @@ const Firebase = {
   },
 
   // get wishes of single wishlist
+  getWishes: async (id) => {
+    try {
+      var snapshot = await db
+        .collection('wishes')
+        .where('wishlistId', '==', id)
+        .get();
+
+      return snapshot.docs.map((doc) => doc.data());
+    } catch (error) {
+      console.log('Error @getWishlists: ', error);
+    }
+  },
 
   // update wishlist data
 

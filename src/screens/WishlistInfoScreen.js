@@ -1,28 +1,46 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import Text from '../components/Text';
+import { FirebaseContext } from '../context/FirebaseContext';
 import styled from 'styled-components';
 
 export default WishlistInfoScreen = (props) => {
-  const [listName, setListName] = useState();
-  const [listDesc, setListDesc] = useState();
+  const firebase = useContext(FirebaseContext);
+  const [wishes, setWishes] = useState([]);
 
-  const { route } = props 
-  const { item } = route.params
+  const {
+    route: {
+      params: { item },
+    },
+  } = props;
+
+  const loadData = async () => {
+    var data;
+    try {
+      data = await firebase.getWishes(item.id);
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setWishes(data);
+    }
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  console.log(wishes);
 
   return (
-    <Container>
-      <ListName>
+    <>
+      {/* <ListName>
         {item.listName}
       </ListName>
       <ListDesc>
         {item.listDesc}
-      </ListDesc>
-    </Container>
-  
-
-  )
+      </ListDesc> */}
+    </>
+  );
 };
 
 const Container = styled.View`
@@ -33,10 +51,8 @@ const ListName = styled.Text`
   margin-left: 20px;
   font-weight: 300;
   font-size: 14px;
-
-`
+`;
 const ListDesc = styled.Text`
   margin-left: 20px;
   font-weight: 300;
-`
-
+`;
