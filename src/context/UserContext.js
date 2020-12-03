@@ -7,7 +7,7 @@ const UserProvider = (props) => {
     username: '',
     email: '',
     uid: '',
-    isLoggedIn: false,
+    isLoggedIn: null,
     profilePhotoUrl: '',
     UserFirstName: '',
     UserLastName: '',

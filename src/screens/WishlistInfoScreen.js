@@ -12,7 +12,31 @@ export default WishlistInfoScreen = (props) => {
   const { item } = route.params
 
   return (
-  <Text>{item.listName}</Text>
+    <Container>
+      <ListName>
+        {item.listName}
+      </ListName>
+      <ListDesc>
+        {item.listDesc}
+      </ListDesc>
+    </Container>
+  
 
   )
-}
+};
+
+const Container = styled.View`
+  flex: 1;
+`;
+
+const ListName = styled.Text`
+  margin-left: 20px;
+  font-weight: 300;
+  font-size: 14px;
+
+`
+const ListDesc = styled.Text`
+  margin-left: 20px;
+  font-weight: 300;
+`
+

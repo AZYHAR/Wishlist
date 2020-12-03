@@ -16,6 +16,7 @@ export default SignUpScreen = ({ navigation }) => {
   const signUp = async () => {
     setLoading(true);
 
+
     const user = {
       username,
       email,
@@ -32,8 +33,9 @@ export default SignUpScreen = ({ navigation }) => {
 
     try {
       const createdUser = await firebase.createUser(user);
-
-      setUser({ ...createdUser, isLoggedIn: true });
+      if(createdUser){
+        setUser({ ...createdUser, isLoggedIn: true });
+      }      
     } catch (error) {
       console.log('Error @signUp: ', error);
     } finally {
