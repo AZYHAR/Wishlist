@@ -1,12 +1,35 @@
 import React, { useContext, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
+import { FirebaseContext } from '../context/FirebaseContext';
 import Text from '../components/Text';
+import { UserContext } from '../context/UserContext';
 import styled from 'styled-components';
 
-export default AddWishlist = () => {
+export default AddWishlist = ({ navigation }) => {
+  // user info
+  const [user, setUser] = useContext(UserContext);
+  const firebase = useContext(FirebaseContext);
+
   const [listName, setListName] = useState();
   const [listDesc, setListDesc] = useState();
+
+  const addWishlist = async () => {
+    try {
+      const uid = user.uid;
+
+      await firebase.createWishlist({
+        listDesc,
+        listName,
+        uid,
+      });
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      // TODO: Change navigation
+      navigation.navigate('MyWishlists');
+    }
+  };
 
   return (
     <Container>
@@ -31,7 +54,7 @@ export default AddWishlist = () => {
             onChangeText={(listDesc) => setListDesc(listDesc)}
             value={listDesc}
           ></ListField>
-          <Create>
+          <Create onPress={addWishlist}>
             <Text>Create</Text>
           </Create>
         </ListContainer>

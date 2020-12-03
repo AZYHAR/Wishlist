@@ -27,7 +27,6 @@ export default EditUserInfo = ({ navigation }) => {
   const [countryName, setCountryName] = useState(user.location);
 
   const onSelect = (country) => {
-    console.log(country);
     setCountryCode(country.cca2);
     setCountryName(country.name);
   };

@@ -13,8 +13,6 @@ export default WishlistScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const firebase = useContext(FirebaseContext);
 
-
-
   const loadData = async () => {
     var data;
     try {
@@ -31,54 +29,53 @@ export default WishlistScreen = ({ navigation }) => {
     loadData();
   }, []);
 
- console.log(list);
-
- const renderList = ({ item }) => (
-   <ListContainer>
-    <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate('WishListInfo', { item: item})}
-          >
-     <ListHeaderContainer>
-       <ListInfoContainer>
-          <Text bold large>{item.listName}</Text>
-          <Text>{item.listDesc}</Text>
-          <Text>{item.listItem.itemName}</Text>
-       </ListInfoContainer>
-     </ListHeaderContainer>
-     </TouchableOpacity>
-   </ListContainer>
- )
+  const renderList = ({ item }) => {
+    console.log(item);
+    return (
+      <ListContainer>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('WishListInfo', { item: item })}
+        >
+          <ListHeaderContainer>
+            <ListInfoContainer>
+              <Text bold large>
+                {item.listName}
+              </Text>
+              <Text>{item.listDesc}</Text>
+            </ListInfoContainer>
+          </ListHeaderContainer>
+        </TouchableOpacity>
+      </ListContainer>
+    );
+  };
 
   return (
-    
-    <Container>
-        <HeaderContainer>
-          <Text large bold>
-            My Wishlists
-          </Text>
-        </HeaderContainer>
-        <PlusSign>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate('AddWishlist')}
-          >
-            <Text XL>+</Text>
-          </TouchableOpacity>
-        </PlusSign>
-        
-      
-        {loading === true ? (
-                <Text>Loading... </Text>
-            ) : (
-              
-              <FeedContainer>
-              
-                <Feed data={list} renderItem={renderList} keyExtractor={(item) => item.id.toString()}/>
+    <>
+      <HeaderContainer>
+        <Text bold large>
+          My Wishlists
+        </Text>
+      </HeaderContainer>
 
-              </FeedContainer>
-            )}
-    </Container>
+      <AddWishlist
+        onPress={() => {
+          navigation.navigate('AddWishlist');
+        }}
+      >
+        <PlusText>+</PlusText>
+      </AddWishlist>
+
+      {/* TODO: Add wishlist */}
+      {/* also update the page when redirecting */}
+      {loading === true ? (
+        <></>
+      ) : (
+        <FeedContainer>
+          <Feed data={list} renderItem={renderList} />
+        </FeedContainer>
+      )}
+    </>
   );
 };
 
@@ -98,33 +95,36 @@ const styles = StyleSheet.create({
   },
 });
 
-const Container = styled.View`
-  flex: 1;
-  padding-top: 64px;
-  padding-left: 32px;
+const PlusText = styled.Text`
+  font-size: 25px;
+  font-weight: 600;
+  text-align: center;
 `;
 
-const Feed = styled.FlatList``;
+const HeaderContainer = styled.View`
+  top: 30px;
+  left: 33%;
+`;
 
 const FeedContainer = styled.View`
-  flex: 1;
-  bottom: 310px;
-  right: 20px;
-`;
-const HeaderContainer = styled.View`
-  flex-direction: row;
-  flex: 1;
+  height: 87%;
+  top: 10px;
 `;
 
-const PlusSign = styled.View`
+const AddWishlist = styled.TouchableOpacity`
   position: absolute;
-  width: 50px;
-  height: 50px;
-  border-radius: 300px;
-  border: 2px;
-  left: 330px;
-  top: 50px;
-  border-color: #8b5fbf;
+  width: 80px;
+  height: 34px;
+
+  top: 30px;
+  left: 75%;
+
+  background: #c0e5d5;
+  border-radius: 26px;
+`;
+
+const Feed = styled.FlatList`
+  top: 35px;
 `;
 
 const ListContainer = styled.View`
@@ -132,16 +132,12 @@ const ListContainer = styled.View`
   background-color: #dcd6f7;
   border-radius: 6px;
   padding: 8px;
+`;
 
+const ListHeaderContainer = styled.View``;
 
-`
-const ListHeaderContainer = styled.View`
-  flex-direction: row;
-  margin-bottom: 16px;
-  align-items: center;
-`
 const ListInfoContainer = styled.View`
   flex: 1;
   margin: 0 16px;
   top: 10px;
-`
+`;

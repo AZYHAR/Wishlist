@@ -25,7 +25,7 @@ const Firebase = {
         .auth()
         .createUserWithEmailAndPassword(user.email, user.password);
       const uid = Firebase.getCurrentUser().uid;
-      
+
       await db.collection('users').doc(uid).set({
         username: user.username,
         email: user.email,
@@ -102,13 +102,6 @@ const Firebase = {
         .collection('wishlists')
         .where('uid', '==', uid)
         .get();
-      // .onSnapshot((querySnapshot) => {
-      //   var data = [];
-      //   querySnapshot.forEach((doc) => {
-      //     data.push(doc.data());
-      //   });
-      //   console.log(data);
-      // });
 
       return snapshot.docs.map((doc) => doc.data());
     } catch (error) {
@@ -121,6 +114,25 @@ const Firebase = {
   // update wishlist data
 
   // update single wish data
+
+  // create wishlist
+  createWishlist: async (wishlist) => {
+    try {
+      const { id } = await db.collection('wishlists').add({
+        lastEdited: Date.now(),
+        listDesc: wishlist.listDesc,
+        listName: wishlist.listName,
+        uid: wishlist.uid,
+        id: '',
+      });
+
+      await db.collection('wishlists').doc(id).update({
+        id: id,
+      });
+    } catch (error) {
+      console.log('Error @addWishlist: ', error);
+    }
+  },
 
   logOut: async () => {
     try {
@@ -137,17 +149,14 @@ const Firebase = {
   signIn: async (email, password) => {
     return firebase.auth().signInWithEmailAndPassword(email, password);
   },
-  
+
   passwordReset: async (email) => {
     const emailExists = firebase.auth().fetchSignInMethodsForEmail(email);
-    if(emailExists) {
-      alert('A recovery link has been sent to your email.')
-      return firebase.auth().sendPasswordResetEmail(email)
-    }     
-    
-    
+    if (emailExists) {
+      alert('A recovery link has been sent to your email.');
+      return firebase.auth().sendPasswordResetEmail(email);
+    }
   },
-  
 };
 
 const FirebaseProvider = (props) => {
