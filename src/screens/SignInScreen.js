@@ -22,6 +22,10 @@ export default SignInScreen = ({ navigation }) => {
 
       const userInfo = await firebase.getUserInfo(uid);
 
+      const wLists = await firebase.getWishlists(uid);
+
+      const wiShes = await firebase.getAllWishes(uid);
+
       setUser({
         username: userInfo.username,
         email: userInfo.email,
@@ -34,6 +38,8 @@ export default SignInScreen = ({ navigation }) => {
         location: userInfo.location,
         birthday: userInfo.birthday,
         locationCode: userInfo.locationCode,
+        wishlists: wLists,
+        wishes: wiShes,
       });
     } catch (error) {
       alert(error.message);
@@ -92,7 +98,6 @@ export default SignInScreen = ({ navigation }) => {
         )}
       </SignInContainer>
 
-
       <SignUp onPress={() => navigation.navigate('SignUp')}>
         <Text small center>
           New to Gyfter?
@@ -102,8 +107,6 @@ export default SignInScreen = ({ navigation }) => {
           </Text>
         </Text>
       </SignUp>
-
-    
 
       <PasswordReset onPress={() => navigation.navigate('ForgotPassword')}>
         <Text small center bold color='#8B5FBF'>
@@ -158,7 +161,7 @@ const GoogleAuth = styled.TouchableOpacity`
   height: 48px;
   align-items: center;
   justify-content: center;
-  background-color: #4285F4;
+  background-color: #4285f4;
   border-radius: 20px;
 `;
 
@@ -173,7 +176,7 @@ const SignUp = styled.TouchableOpacity`
 
 const PasswordReset = styled.TouchableOpacity`
   margin-top: 16px;
-`
+`;
 const HeaderGraphic = styled.View`
   position: absolute;
   width: 100%;

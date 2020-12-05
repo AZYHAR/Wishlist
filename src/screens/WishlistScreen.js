@@ -6,28 +6,20 @@ import Text from '../components/Text';
 import { UserContext } from '../context/UserContext';
 import styled from 'styled-components';
 
-export default WishlistScreen = ({ navigation }) => {
+export default WishlistScreen = ({ navigation }, props) => {
   // get data
   const [user, setUser] = useContext(UserContext);
   const [list, setWishList] = useState([]);
-  const [loading, setLoading] = useState(true);
   const firebase = useContext(FirebaseContext);
 
-  const loadData = async () => {
-    var data;
-    try {
-      data = await firebase.getWishlists(user.uid);
-    } catch (error) {
-      alert(error.message);
-    } finally {
-      setWishList(data);
-      setLoading(false);
-    }
-  };
+  const { wishlists } = user;
+
+  var Test = () => <Feed data={list} renderItem={renderList} />;
 
   useEffect(() => {
-    loadData();
-  }, []);
+    setWishList(wishlists);
+    Test = () => <Feed data={list} renderItem={renderList} />;
+  }, [wishlists]);
 
   const renderList = ({ item }) => {
     console.log(item);
@@ -68,13 +60,9 @@ export default WishlistScreen = ({ navigation }) => {
 
       {/* TODO: Add wishlist */}
       {/* also update the page when redirecting */}
-      {loading === true ? (
-        <></>
-      ) : (
-        <FeedContainer>
-          <Feed data={list} renderItem={renderList} />
-        </FeedContainer>
-      )}
+      <FeedContainer>
+        <Test />
+      </FeedContainer>
     </>
   );
 };

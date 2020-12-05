@@ -11,22 +11,25 @@ export default AddWishlist = ({ navigation }) => {
   const [user, setUser] = useContext(UserContext);
   const firebase = useContext(FirebaseContext);
 
-  const [listName, setListName] = useState();
-  const [listDesc, setListDesc] = useState();
+  const [listName, setListName] = useState('');
+  const [listDesc, setListDesc] = useState('');
 
   const addWishlist = async () => {
     try {
       const uid = user.uid;
 
-      await firebase.createWishlist({
+      const added_wishlist = await firebase.createWishlist({
         listDesc,
         listName,
         uid,
       });
+
+      setUser((state) => {
+        return { ...state, wishlists: [...state.wishlists, added_wishlist] };
+      });
     } catch (error) {
       alert(error.message);
     } finally {
-      // TODO: Change navigation
       navigation.navigate('MyWishlists');
     }
   };

@@ -14,22 +14,22 @@ export default WishlistInfoScreen = (props) => {
     },
   } = props;
 
-  const loadData = async () => {
-    var data;
-    try {
-      data = await firebase.getWishes(item.id);
-    } catch (error) {
-      alert(error.message);
-    } finally {
-      setWishes(data);
-    }
-  };
+  // const loadData = async () => {
+  //   var data;
+  //   try {
+  //     data = await firebase.getWishes(item.id);
+  //   } catch (error) {
+  //     alert(error.message);
+  //   } finally {
+  //     setWishes(data);
+  //   }
+  // };
 
-  useEffect(() => {
-    loadData();
-  }, []);
+  // useEffect(() => {
+  //   loadData();
+  // }, []);
 
-  console.log(wishes);
+  console.log(props);
 
   return (
     <>

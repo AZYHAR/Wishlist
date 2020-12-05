@@ -15,6 +15,8 @@ const UserProvider = (props) => {
     location: '',
     locationCode: '',
     birthday: '',
+    wishlists: [],
+    wishes: [],
   });
 
   return (

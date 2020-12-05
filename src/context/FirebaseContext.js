@@ -110,12 +110,9 @@ const Firebase = {
   },
 
   // get wishes of single wishlist
-  getWishes: async (id) => {
+  getAllWishes: async (id) => {
     try {
-      var snapshot = await db
-        .collection('wishes')
-        .where('wishlistId', '==', id)
-        .get();
+      var snapshot = await db.collection('wishes').where('uid', '==', id).get();
 
       return snapshot.docs.map((doc) => doc.data());
     } catch (error) {
@@ -130,17 +127,25 @@ const Firebase = {
   // create wishlist
   createWishlist: async (wishlist) => {
     try {
-      const { id } = await db.collection('wishlists').add({
-        lastEdited: Date.now(),
+      const date = new Date();
+
+      var obj = {
+        lastEdited: date.toString(),
         listDesc: wishlist.listDesc,
         listName: wishlist.listName,
         uid: wishlist.uid,
         id: '',
-      });
+      };
 
-      await db.collection('wishlists').doc(id).update({
-        id: id,
-      });
+      console.log(obj);
+
+      const { id } = await db.collection('wishlists').add(obj);
+
+      await db.collection('wishlists').doc(id).update({ id: id });
+
+      obj.id = id;
+
+      return obj;
     } catch (error) {
       console.log('Error @addWishlist: ', error);
     }

@@ -16,7 +16,6 @@ export default SignUpScreen = ({ navigation }) => {
   const signUp = async () => {
     setLoading(true);
 
-
     const user = {
       username,
       email,
@@ -28,13 +27,15 @@ export default SignUpScreen = ({ navigation }) => {
       location: 'Canada',
       locationCode: 'CA',
       birthday: 'April 20, 1969',
+      wishlists: [],
+      wishes: [],
     };
 
     try {
       const createdUser = await firebase.createUser(user);
-      if(createdUser){
+      if (createdUser) {
         setUser({ ...createdUser, isLoggedIn: true });
-      }      
+      }
     } catch (error) {
       console.log('Error @signUp: ', error);
     } finally {
