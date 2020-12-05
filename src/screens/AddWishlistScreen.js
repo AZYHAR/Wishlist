@@ -82,11 +82,11 @@ const Container = styled.View`
 `;
 
 const HeaderContainer = styled.View`
-  margin-top: 75px;
+  margin-top: 35px;
 `;
 
 const List = styled.View`
-  margin: 64px 32px 32px;
+  margin: 0px 32px 32px;
 `;
 
 const ListContainer = styled.View`

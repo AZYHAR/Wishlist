@@ -1,5 +1,6 @@
+import { Feather, MaterialIcons } from '@expo/vector-icons';
 import React, { useContext, useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import { FirebaseContext } from '../context/FirebaseContext';
 import Text from '../components/Text';
@@ -11,7 +12,11 @@ export default WishlistScreen = ({ navigation }, props) => {
   const [user, setUser] = useContext(UserContext);
   const firebase = useContext(FirebaseContext);
 
+  //model visible
+  const [toEdit, setToEdit] = useState({});
   const { wishlists } = user;
+
+  //
 
   var List = () => <Feed data={wishlists} renderItem={renderList} />;
 
@@ -19,8 +24,24 @@ export default WishlistScreen = ({ navigation }, props) => {
     List = () => <Feed data={wishlists} renderItem={renderList} />;
   }, [wishlists]);
 
+  const removeWishlist = async (id) => {
+    try {
+      await firebase.deleteWishlist(id);
+
+      setUser((state) => {
+        return {
+          ...state,
+          wishlists: [...state.wishlists.filter((w) => w.id != id)],
+        };
+      });
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      navigation.navigate('MyWishlists');
+    }
+  };
+
   const renderList = ({ item }) => {
-    // console.log(item);
     return (
       <ListContainer>
         <TouchableOpacity
@@ -36,6 +57,20 @@ export default WishlistScreen = ({ navigation }, props) => {
             </ListInfoContainer>
           </ListHeaderContainer>
         </TouchableOpacity>
+        <EditButton
+          onPress={() => {
+            setToEdit(toEdit);
+          }}
+        >
+          <Feather name='edit' size={24} color='black' />
+        </EditButton>
+        <DeleteButton
+          onPress={() => {
+            removeWishlist(item.id);
+          }}
+        >
+          <MaterialIcons name='delete' size={27} color='black' />
+        </DeleteButton>
       </ListContainer>
     );
   };
@@ -80,6 +115,36 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 });
+
+const EditButton = styled.TouchableOpacity`
+  position: absolute;
+  left: 73%;
+  top: 13px;
+
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border-color: #ff708d; */
+  /* border-width: 1px; */
+`;
+
+const DeleteButton = styled.TouchableOpacity`
+  position: absolute;
+  left: 87%;
+  top: 13px;
+
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border-color: #ff708d; */
+  /* border-width: 1px; */
+`;
 
 const PlusText = styled.Text`
   font-size: 25px;

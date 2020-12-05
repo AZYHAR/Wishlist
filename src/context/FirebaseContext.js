@@ -124,6 +124,20 @@ const Firebase = {
 
   // update single wish data
 
+  deleteWishlist: async (id) => {
+    try {
+      query = await db.collection('wishlists').where('id', '==', id);
+
+      query.get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          doc.ref.delete();
+        });
+      });
+    } catch (error) {
+      console.log('Error @addWishlist: ', error);
+    }
+  },
+
   // create wishlist
   createWishlist: async (wishlist) => {
     try {
