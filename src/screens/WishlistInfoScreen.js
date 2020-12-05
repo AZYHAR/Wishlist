@@ -2,57 +2,89 @@ import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { FirebaseContext } from '../context/FirebaseContext';
+import Text from '../components/Text';
+import { UserContext } from '../context/UserContext';
 import styled from 'styled-components';
 
 export default WishlistInfoScreen = (props) => {
+  const id = props.route.params.item.id;
+
   const firebase = useContext(FirebaseContext);
-  const [wishes, setWishes] = useState([]);
+  const [user, setUser] = useContext(UserContext);
 
-  const {
-    route: {
-      params: { item },
-    },
-  } = props;
+  const wishes = user.wishes.filter((wish) => wish.wishId == id);
 
-  // const loadData = async () => {
-  //   var data;
-  //   try {
-  //     data = await firebase.getWishes(item.id);
-  //   } catch (error) {
-  //     alert(error.message);
-  //   } finally {
-  //     setWishes(data);
-  //   }
-  // };
+  console.log(wishes);
 
-  // useEffect(() => {
-  //   loadData();
-  // }, []);
+  var List = () => <Feed data={wishes} renderItem={renderList} />;
 
-  console.log(props);
+  useEffect(() => {
+    List = () => <Feed data={wishes} renderItem={renderList} />;
+  }, [wishes]);
+
+  const renderList = ({ item }) => {
+    return (
+      <ListContainer>
+        <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <ListHeaderContainer>
+            <ListInfoContainer>
+              <Text bold large>
+                {item.title}
+              </Text>
+              <Text>{item.context}</Text>
+            </ListInfoContainer>
+          </ListHeaderContainer>
+        </TouchableOpacity>
+      </ListContainer>
+    );
+  };
 
   return (
     <>
-      {/* <ListName>
-        {item.listName}
-      </ListName>
-      <ListDesc>
-        {item.listDesc}
-      </ListDesc> */}
+      <FeedContainer>
+        <List />
+      </FeedContainer>
     </>
   );
 };
 
-const Container = styled.View`
-  flex: 1;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+  },
+  button: {
+    left: 8,
+    top: -9,
+  },
+  countContainer: {
+    alignItems: 'center',
+    padding: 10,
+  },
+});
+
+const FeedContainer = styled.View`
+  height: 79%;
+  top: 80px;
+  bottom: 20px;
 `;
 
-const ListName = styled.Text`
-  margin-left: 20px;
-  font-weight: 300;
-  font-size: 14px;
+const Feed = styled.FlatList`
+  top: 35px;
 `;
-const ListDesc = styled.Text`
-  margin-left: 20px;
-  font-weight: 300;
+
+const ListContainer = styled.View`
+  margin: 16px 16px 0 16px;
+  background-color: #dcd6f7;
+  border-radius: 6px;
+  padding: 8px;
+`;
+
+const ListHeaderContainer = styled.View``;
+
+const ListInfoContainer = styled.View`
+  flex: 1;
+  margin: 0 16px;
+  top: 10px;
 `;

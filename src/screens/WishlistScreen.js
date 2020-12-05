@@ -5,27 +5,22 @@ import { FirebaseContext } from '../context/FirebaseContext';
 import Text from '../components/Text';
 import { UserContext } from '../context/UserContext';
 import styled from 'styled-components';
-import { useIsFocused } from "@react-navigation/native";
 
 export default WishlistScreen = ({ navigation }, props) => {
   // get data
   const [user, setUser] = useContext(UserContext);
-  const [list, setWishList] = useState([]);
   const firebase = useContext(FirebaseContext);
 
   const { wishlists } = user;
 
-  var Test = () => <Feed data={list} renderItem={renderList} />;
+  var List = () => <Feed data={wishlists} renderItem={renderList} />;
 
-  const isFocused = useIsFocused();
-  
   useEffect(() => {
-    setWishList(wishlists);
-    Test = () => <Feed data={list} renderItem={renderList} />;
+    List = () => <Feed data={wishlists} renderItem={renderList} />;
   }, [wishlists]);
 
   const renderList = ({ item }) => {
-    console.log(item);
+    // console.log(item);
     return (
       <ListContainer>
         <TouchableOpacity
@@ -64,7 +59,7 @@ export default WishlistScreen = ({ navigation }, props) => {
       {/* TODO: Add wishlist */}
       {/* also update the page when redirecting */}
       <FeedContainer>
-        <Test />
+        <List />
       </FeedContainer>
     </>
   );
@@ -98,7 +93,7 @@ const HeaderContainer = styled.View`
 `;
 
 const FeedContainer = styled.View`
-  height: 87%;
+  height: 79%;
   top: 80px;
   bottom: 20px;
 `;
