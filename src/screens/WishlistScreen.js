@@ -5,6 +5,7 @@ import { FirebaseContext } from '../context/FirebaseContext';
 import Text from '../components/Text';
 import { UserContext } from '../context/UserContext';
 import styled from 'styled-components';
+import { useIsFocused } from "@react-navigation/native";
 
 export default WishlistScreen = ({ navigation }, props) => {
   // get data
@@ -16,6 +17,8 @@ export default WishlistScreen = ({ navigation }, props) => {
 
   var Test = () => <Feed data={list} renderItem={renderList} />;
 
+  const isFocused = useIsFocused();
+  
   useEffect(() => {
     setWishList(wishlists);
     Test = () => <Feed data={list} renderItem={renderList} />;
@@ -90,13 +93,14 @@ const PlusText = styled.Text`
 `;
 
 const HeaderContainer = styled.View`
-  top: 30px;
-  left: 33%;
+  top: 75px;
+  left: 10%;
 `;
 
 const FeedContainer = styled.View`
   height: 87%;
-  top: 10px;
+  top: 80px;
+  bottom: 20px;
 `;
 
 const AddWishlist = styled.TouchableOpacity`
@@ -104,10 +108,11 @@ const AddWishlist = styled.TouchableOpacity`
   width: 80px;
   height: 34px;
 
-  top: 30px;
+  top: 80px;
+  bottom: 20px;
   left: 75%;
 
-  background: #c0e5d5;
+  background: #ff708d;
   border-radius: 26px;
 `;
 
