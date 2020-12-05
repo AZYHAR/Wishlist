@@ -21,7 +21,7 @@ export default ProfileScreen = ({ navigation }) => {
   return (
     <Container>
       <ProfileHeadContainer
-        source={require('../../assets/user_background.jpg')}
+       
       />
       <ProfilePhoto
         source={
@@ -45,12 +45,12 @@ export default ProfileScreen = ({ navigation }) => {
       </BirthdayLocation>
       <DivideLine />
       <Logout onPress={logOut}>
-        <Text large light center>
+        <Text large center>
           Log Out
         </Text>
       </Logout>
       <Edit onPress={() => navigation.navigate('EditUser')}>
-        <Text>Edit user</Text>
+        <Text medium>Edit user</Text>
       </Edit>
     </Container>
   );
@@ -60,9 +60,10 @@ const Container = styled.View`
   flex: 1;
 `;
 
-const ProfileHeadContainer = styled.Image`
+const ProfileHeadContainer = styled.View`
   height: 133px;
   position: relative;
+  background-color: #8b5fbf;
 `;
 
 const ProfilePhoto = styled.Image`
@@ -141,32 +142,30 @@ const DivideLine = styled.View`
   left: 5%;
   top: 10px;
 
-  border: 1px solid #e7b1b3;
+  border: 1px solid #8b5fbf;
 `;
 
 const Logout = styled.TouchableOpacity`
-  padding-top: 11px;
-  padding-left: 2px;
+  align-items: center;
+  justify-content: center;
   position: absolute;
   width: 33%;
-  height: 8%;
+  height: 6%;
   top: 627px;
   left: 33%;
-
-  background: #c0e5d5;
+  background: #ff708d;
   border-radius: 26px;
 `;
 
 const Edit = styled.TouchableOpacity`
-  padding-top: 4px;
-  padding-left: 18%;
+
+  align-items: center;
+  justify-content: center;
   position: absolute;
   width: 91px;
-  height: 34px;
+  height: 35px;
   left: 70%;
   top: 150px;
-
-  background: #c0e5d5;
-  border: 2px solid #c0e5d5;
+  background: #ff708d;
   border-radius: 25px;
 `;

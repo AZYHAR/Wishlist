@@ -8,6 +8,7 @@ import { FirebaseContext } from '../context/FirebaseContext';
 import Moment from 'moment';
 import { UserContext } from '../context/UserContext';
 import styled from 'styled-components';
+import CustomText from "../components/Text"
 
 export default EditUserInfo = ({ navigation }) => {
   // get data
@@ -157,7 +158,7 @@ export default EditUserInfo = ({ navigation }) => {
       />
 
       <SaveUserData onPress={updateData}>
-        <Text>Save User</Text>
+        <CustomText medium bold color="#000">Save User</CustomText>
       </SaveUserData>
     </>
   );
@@ -402,6 +403,6 @@ const SaveUserData = styled.TouchableOpacity`
   height: 55px;
   top: 627px;
 
-  background: #c0e5d5;
+  background: #ff708d;
   border-radius: 26px;
 `;
