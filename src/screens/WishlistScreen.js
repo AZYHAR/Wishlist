@@ -93,7 +93,7 @@ const PlusText = styled.Text`
 `;
 
 const HeaderContainer = styled.View`
-  top: 75px;
+  top: 9%;
   left: 10%;
 `;
 
@@ -108,7 +108,7 @@ const AddWishlist = styled.TouchableOpacity`
   width: 80px;
   height: 34px;
 
-  top: 80px;
+  top: 9%;
   bottom: 20px;
   left: 75%;
 
