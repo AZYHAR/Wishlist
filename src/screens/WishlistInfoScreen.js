@@ -41,28 +41,22 @@ export default WishlistInfoScreen = (props) => {
 
   return (
     <>
-    <HeaderContainer>
-      <Text bold large>Wishlist Details</Text>
-      <AddWish
-        onPress={() => {
-          navigation.navigate('AddWishlist');
-        }}
-      >
-        <PlusText>+</PlusText>
-      </AddWish>
-    </HeaderContainer>
+      <HeaderContainer>
+        <Text bold large>
+          Wishlist Details
+        </Text>
+        <AddWish
+          onPress={() => {
+            navigation.navigate('AddWishlist');
+          }}
+        >
+          <PlusText>+</PlusText>
+        </AddWish>
+      </HeaderContainer>
 
-    <FeedContainer>
-      <List />
-    </FeedContainer>
-   
-
-    <FooterContainer>
-      <DeleteList>
-        <Text center medium >Delete Wishlist</Text>
-      </DeleteList>
-        
-    </FooterContainer>
+      <FeedContainer>
+        <List />
+      </FeedContainer>
     </>
   );
 };
@@ -88,11 +82,6 @@ const HeaderContainer = styled.View`
   bottom: 20px;
   left: 5%;
 `;
-const FooterContainer = styled.View`
-  top: 9%;
-  bottom: 20px;
-  left: 5%;
-`;
 
 const PlusText = styled.Text`
   font-size: 25px;
@@ -113,18 +102,6 @@ const AddWish = styled.TouchableOpacity`
   border-radius: 26px;
 `;
 
-const DeleteList = styled.TouchableOpacity`
-  margin: auto;
-  width: 65%;
-  bottom: 25%;
-  right: 10px;
-  height: 48px;
-  align-items: center;
-  justify-content: center;
-  background-color: #ff708d;
-  border-radius: 20px;
-`;
-
 const FeedContainer = styled.View`
   height: 80%;
   top: 80px;
@@ -133,7 +110,6 @@ const FeedContainer = styled.View`
 
 const Feed = styled.FlatList`
   top: 35px;
-  
 `;
 
 const ListContainer = styled.View`
