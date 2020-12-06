@@ -54,9 +54,15 @@ export default WishlistScreen = ({ navigation }, props) => {
   };
 
   const updateWishlist = async () => {
+    const date = new Date();
     try {
       // Pass data LName, DName, update Date
-      // await firebase.updateWishlist();
+      await firebase.updateWishlist({
+        listName: wName,
+        listDesc: wDescription,
+        lastEdited: date,
+        id: toEdit.id,
+      });
 
       // Pass object from firebase to update value
       setUser((state) => {
@@ -64,7 +70,12 @@ export default WishlistScreen = ({ navigation }, props) => {
           ...state,
           wishlists: [
             ...state.wishlists.filter((w) => w.id != toEdit.id),
-            { ...toEdit, listName: wName, listDesc: wDescription },
+            {
+              ...toEdit,
+              listName: wName,
+              listDesc: wDescription,
+              lastEdited: date,
+            },
           ],
         };
       });

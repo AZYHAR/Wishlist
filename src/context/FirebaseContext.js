@@ -121,6 +121,17 @@ const Firebase = {
   },
 
   // update wishlist data
+  updateWishlist: async (wishlist) => {
+    try {
+      db.collection('wishlists').doc(wishlist.id).update({
+        listDesc: wishlist.listDesc,
+        listName: wishlist.listName,
+        lastEdited: wishlist.lastEdited,
+      });
+    } catch (error) {
+      console.log('Error @updateWishlistFailed: ', error);
+    }
+  },
 
   // update single wish data
 
