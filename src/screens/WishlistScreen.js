@@ -300,14 +300,14 @@ const PlusText = styled.Text`
 `;
 
 const HeaderContainer = styled.View`
-  top: 80px;
+  top: 63px;
   position: absolute;
   left: 10%;
 `;
 
 const FeedContainer = styled.View`
   height: 79%;
-  top: 120px;
+  top: 90px;
   bottom: 20px;
   width: 100%;
   position: absolute;
