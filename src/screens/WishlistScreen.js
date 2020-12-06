@@ -36,7 +36,7 @@ export default WishlistScreen = ({ navigation }, props) => {
     List = () => <Feed data={wishlists} renderItem={renderList} />;
   }, [wishlists]);
 
-  const removeWishlist = async () => {
+  const removeWishlist = async (id) => {
     try {
       await firebase.deleteWishlist(id);
 
