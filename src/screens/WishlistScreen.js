@@ -1,6 +1,13 @@
+import {
+  Alert,
+  Modal,
+  StyleSheet,
+  TouchableHighlight,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import React, { useContext, useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import { FirebaseContext } from '../context/FirebaseContext';
 import Text from '../components/Text';
@@ -16,7 +23,12 @@ export default WishlistScreen = ({ navigation }, props) => {
   const [toEdit, setToEdit] = useState({});
   const { wishlists } = user;
 
-  //
+  //Edit wishlist
+  const [modalVisible, setModalVisible] = useState(false);
+
+  // Edit Fields
+  const [wName, setWName] = useState('');
+  const [wDescription, setWDescription] = useState('');
 
   var List = () => <Feed data={wishlists} renderItem={renderList} />;
 
@@ -24,7 +36,7 @@ export default WishlistScreen = ({ navigation }, props) => {
     List = () => <Feed data={wishlists} renderItem={renderList} />;
   }, [wishlists]);
 
-  const removeWishlist = async (id) => {
+  const removeWishlist = async () => {
     try {
       await firebase.deleteWishlist(id);
 
@@ -41,9 +53,33 @@ export default WishlistScreen = ({ navigation }, props) => {
     }
   };
 
+  const updateWishlist = async () => {
+    try {
+      // Pass data LName, DName, update Date
+      // await firebase.updateWishlist();
+
+      // Pass object from firebase to update value
+      setUser((state) => {
+        return {
+          ...state,
+          wishlists: [
+            ...state.wishlists.filter((w) => w.id != toEdit.id),
+            { ...toEdit, listName: wName, listDesc: wDescription },
+          ],
+        };
+      });
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      navigation.navigate('MyWishlists');
+    }
+  };
+
   const renderList = ({ item }) => {
     return (
-      <ListContainer>
+      <ListContainer
+        style={modalVisible ? { backgroundColor: 'rgba(0, 0, 0, 0.5)' } : {}}
+      >
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.navigate('WishListInfo', { item: item })}
@@ -59,7 +95,10 @@ export default WishlistScreen = ({ navigation }, props) => {
         </TouchableOpacity>
         <EditButton
           onPress={() => {
-            setToEdit(toEdit);
+            setWName(item.listName);
+            setWDescription(item.listDesc);
+            setToEdit(item);
+            setModalVisible(true);
           }}
         >
           <Feather name='edit' size={24} color='black' />
@@ -77,28 +116,87 @@ export default WishlistScreen = ({ navigation }, props) => {
 
   return (
     <>
-      <HeaderContainer>
-        <Text bold large>
-          My Wishlists
-        </Text>
-      </HeaderContainer>
+      {/* Edit Single Wishlist Data */}
+      <View>
+        <Modal animationType='fade' transparent={true} visible={modalVisible}>
+          <View style={styles.modalView}>
+            <TitleText>Title: </TitleText>
+            <WishlistName
+              autoCapitalize='none'
+              autoCorrect={false}
+              onChangeText={(wName) => setWName(wName)}
+              value={wName}
+            />
 
-      <AddWishlist
-        onPress={() => {
-          navigation.navigate('AddWishlist');
-        }}
+            <DescText>Description: </DescText>
+            <WishlistDetail
+              autoCapitalize='none'
+              autoCorrect={false}
+              onChangeText={(wDescription) => setWDescription(wDescription)}
+              value={wDescription}
+            />
+
+            <SaveBtn
+              style={styles.openButton}
+              onPress={() => {
+                // TODO: update database
+                // TODO: update wishlist from firestore
+                updateWishlist();
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <Text style={styles.textStyle}>Save</Text>
+            </SaveBtn>
+
+            <CloseBtn
+              style={styles.openButton}
+              onPress={() => {
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <Text style={styles.textStyle}>Close</Text>
+            </CloseBtn>
+          </View>
+        </Modal>
+      </View>
+
+      {/* Display wishlists */}
+      <View
+        style={
+          modalVisible
+            ? { flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)' }
+            : { flex: 1 }
+        }
       >
-        <PlusText>+</PlusText>
-      </AddWishlist>
+        <HeaderContainer>
+          <Text bold large>
+            My Wishlists
+          </Text>
+        </HeaderContainer>
 
-      {/* TODO: Add wishlist */}
-      {/* also update the page when redirecting */}
-      <FeedContainer>
-        <List />
-      </FeedContainer>
+        <AddWishlist
+          onPress={() => {
+            navigation.navigate('AddWishlist');
+          }}
+        >
+          <PlusText>+</PlusText>
+        </AddWishlist>
+
+        {/* TODO: Add wishlist */}
+        {/* also update the page when redirecting */}
+        <FeedContainer>
+          <List />
+        </FeedContainer>
+      </View>
     </>
   );
 };
+
+const TitleText = styled.Text``;
+const DescText = styled.Text``;
+
+const SaveBtn = styled.TouchableOpacity``;
+const CloseBtn = styled.TouchableOpacity``;
 
 const styles = StyleSheet.create({
   container: {
@@ -110,11 +208,53 @@ const styles = StyleSheet.create({
     left: 8,
     top: -9,
   },
-  countContainer: {
+  centeredView: {
+    flex: 1,
+    // justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    marginTop: 30,
+    margin: 10,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 30,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 100,
+  },
+  openButton: {
+    backgroundColor: '#ff708d',
+    borderRadius: 20,
+    paddingLeft: 30,
+    paddingRight: 30,
     padding: 10,
+    // elevation: 2,
+    margin: 5,
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
   },
 });
+
+const WishlistName = styled.TextInput`
+  border-color: black;
+`;
+
+const WishlistDetail = styled.TextInput``;
 
 const EditButton = styled.TouchableOpacity`
   position: absolute;
@@ -127,8 +267,6 @@ const EditButton = styled.TouchableOpacity`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* border-color: #ff708d; */
-  /* border-width: 1px; */
 `;
 
 const DeleteButton = styled.TouchableOpacity`
@@ -142,8 +280,6 @@ const DeleteButton = styled.TouchableOpacity`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* border-color: #ff708d; */
-  /* border-width: 1px; */
 `;
 
 const PlusText = styled.Text`
@@ -153,7 +289,8 @@ const PlusText = styled.Text`
 `;
 
 const HeaderContainer = styled.View`
-  top: 9%;
+  top: 60px;
+  position: absolute;
   left: 10%;
 `;
 
@@ -161,6 +298,8 @@ const FeedContainer = styled.View`
   height: 79%;
   top: 80px;
   bottom: 20px;
+  width: 100%;
+  position: absolute;
 `;
 
 const AddWishlist = styled.TouchableOpacity`

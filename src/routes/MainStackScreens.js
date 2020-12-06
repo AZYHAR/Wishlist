@@ -3,10 +3,10 @@ import EditUserInfo from '../screens/EditUserInfo';
 import { Ionicons } from '@expo/vector-icons';
 import ProfileScreen from '../screens/ProfileScreen';
 import React from 'react';
+import WishlistInfoScreen from '../screens/WishlistInfoScreen';
 import WishlistScreen from '../screens/WishlistScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import WishlistInfoScreen from '../screens/WishlistInfoScreen';
 
 export default MainStackScreens = () => {
   const MainStack = createBottomTabNavigator();
@@ -52,16 +52,14 @@ export default MainStackScreens = () => {
     >
       <MainStack.Screen name='Wishlist'>
         {() => (
-          <WishlistStack.Navigator
-            
-          >
+          <WishlistStack.Navigator>
             <WishlistStack.Screen
               name='MyWishlists'
               component={WishlistScreen}
               options={{
                 headerShown: false,
-                title: "Wishlists"
-            }}
+                title: 'Wishlists',
+              }}
             />
             <WishlistStack.Screen
               name='AddWishlist'
