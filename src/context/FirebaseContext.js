@@ -133,11 +133,26 @@ const Firebase = {
     }
   },
 
-  // update single wish data
+  // update wishlist data
+  updateWishes: async (wishes) => {
+    try {
+      db.collection('wishes').doc(wishes.wishId).update({
+        completed: wishes.completed,
+        context: wishes.context,
+        title: wishes.title,
+        lastEdited: wishes.lastEdited,
+        title: wishes.title,
+      });
+    } catch (error) {
+      console.log('Error @updateWishesFailed: ', error);
+    }
+  },
+
+  // delete wishlsit
 
   deleteWishlist: async (id) => {
     try {
-      query = await db.collection('wishlists').where('id', '==', id);
+      const query = await db.collection('wishlists').where('id', '==', id);
 
       query.get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
@@ -145,7 +160,23 @@ const Firebase = {
         });
       });
     } catch (error) {
-      console.log('Error @addWishlist: ', error);
+      console.log('Error @deleteWishlist: ', error);
+    }
+  },
+
+  // delete wish
+
+  deleteWish: async (id) => {
+    try {
+      const query = await db.collection('wishes').where('wishId', '==', id);
+
+      query.get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          doc.ref.delete();
+        });
+      });
+    } catch (error) {
+      console.log('Error @deleteWish: ', error);
     }
   },
 

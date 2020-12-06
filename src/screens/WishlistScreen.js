@@ -131,19 +131,22 @@ export default WishlistScreen = ({ navigation }, props) => {
       <View>
         <Modal animationType='fade' transparent={true} visible={modalVisible}>
           <View style={styles.modalView}>
-          
-           <EditContainer>
-            <Text medium bold>Title: </Text>
-            <WishlistName
-              autoCapitalize='none'
-              autoCorrect={false}
-              onChangeText={(wName) => setWName(wName)}
-              value={wName}
-            />
+            <EditContainer>
+              <Text medium bold>
+                Title:{' '}
+              </Text>
+              <WishlistName
+                autoCapitalize='none'
+                autoCorrect={false}
+                onChangeText={(wName) => setWName(wName)}
+                value={wName}
+              />
             </EditContainer>
 
             <EditContainer>
-              <Text medium bold>Description: </Text>
+              <Text medium bold>
+                Description:{' '}
+              </Text>
               <WishlistDetail
                 autoCapitalize='none'
                 autoCorrect={false}
@@ -151,7 +154,7 @@ export default WishlistScreen = ({ navigation }, props) => {
                 value={wDescription}
               />
             </EditContainer>
-         
+
             <SaveBtn
               style={styles.openButton}
               onPress={() => {
@@ -191,15 +194,13 @@ export default WishlistScreen = ({ navigation }, props) => {
         </HeaderContainer>
 
         <AddWishlist
+          style={modalVisible ? { backgroundColor: 'rgba(0, 0, 0, 0.5)' } : {}}
           onPress={() => {
             navigation.navigate('AddWishlist');
           }}
         >
           <PlusText>+</PlusText>
         </AddWishlist>
-
-        {/* TODO: Add wishlist */}
-        {/* also update the page when redirecting */}
         <FeedContainer>
           <List />
         </FeedContainer>
@@ -207,9 +208,6 @@ export default WishlistScreen = ({ navigation }, props) => {
     </>
   );
 };
-
-const TitleText = styled.Text``;
-const DescText = styled.Text``;
 
 const SaveBtn = styled.TouchableOpacity``;
 const CloseBtn = styled.TouchableOpacity``;
@@ -231,12 +229,12 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
-    marginTop: 250,
+    marginTop: 160,
     margin: 10,
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 30,
-    
+
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -271,7 +269,6 @@ const WishlistName = styled.TextInput`
   border-bottom-width: 0.5px;
   height: 48px;
 `;
-
 
 const EditContainer = styled.View`
   margin-bottom: 32px;
