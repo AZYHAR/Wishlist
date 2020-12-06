@@ -131,22 +131,27 @@ export default WishlistScreen = ({ navigation }, props) => {
       <View>
         <Modal animationType='fade' transparent={true} visible={modalVisible}>
           <View style={styles.modalView}>
-            <TitleText>Title: </TitleText>
+          
+           <EditContainer>
+            <Text medium bold>Title: </Text>
             <WishlistName
               autoCapitalize='none'
               autoCorrect={false}
               onChangeText={(wName) => setWName(wName)}
               value={wName}
             />
+            </EditContainer>
 
-            <DescText>Description: </DescText>
-            <WishlistDetail
-              autoCapitalize='none'
-              autoCorrect={false}
-              onChangeText={(wDescription) => setWDescription(wDescription)}
-              value={wDescription}
-            />
-
+            <EditContainer>
+              <Text medium bold>Description: </Text>
+              <WishlistDetail
+                autoCapitalize='none'
+                autoCorrect={false}
+                onChangeText={(wDescription) => setWDescription(wDescription)}
+                value={wDescription}
+              />
+            </EditContainer>
+         
             <SaveBtn
               style={styles.openButton}
               onPress={() => {
@@ -226,12 +231,12 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
-    marginTop: 30,
+    marginTop: 250,
     margin: 10,
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 30,
-    alignItems: 'center',
+    
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -262,16 +267,26 @@ const styles = StyleSheet.create({
 });
 
 const WishlistName = styled.TextInput`
-  border-color: black;
+  border-bottom-color: #8e93a1;
+  border-bottom-width: 0.5px;
+  height: 48px;
 `;
 
-const WishlistDetail = styled.TextInput``;
+
+const EditContainer = styled.View`
+  margin-bottom: 32px;
+`;
+const WishlistDetail = styled.TextInput`
+  border-bottom-color: #8e93a1;
+  border-bottom-width: 0.5px;
+  height: 48px;
+`;
 
 const EditButton = styled.TouchableOpacity`
   position: absolute;
   left: 73%;
   top: 13px;
-
+  padding-bottom: 15px;
   width: 40px;
   height: 40px;
   border-radius: 20px;
@@ -284,7 +299,7 @@ const DeleteButton = styled.TouchableOpacity`
   position: absolute;
   left: 87%;
   top: 13px;
-
+  padding-bottom: 15px;
   width: 40px;
   height: 40px;
   border-radius: 20px;
@@ -343,4 +358,5 @@ const ListInfoContainer = styled.View`
   flex: 1;
   margin: 0 16px;
   top: 10px;
+  width: 60%;
 `;
