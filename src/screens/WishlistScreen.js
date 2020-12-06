@@ -286,7 +286,7 @@ const EditButton = styled.TouchableOpacity`
   position: absolute;
   left: 73%;
   top: 13px;
-
+  padding-bottom: 15px;
   width: 40px;
   height: 40px;
   border-radius: 20px;
@@ -299,7 +299,7 @@ const DeleteButton = styled.TouchableOpacity`
   position: absolute;
   left: 87%;
   top: 13px;
-
+  padding-bottom: 15px;
   width: 40px;
   height: 40px;
   border-radius: 20px;
