@@ -23,16 +23,19 @@ export default SignUpScreen = ({ navigation }) => {
       profilePhotoUrl: 'default',
       userFirstName: 'FirstN',
       userLastName: 'LastN',
-      bio:
-        'Hello! My name is ________. I want to introduce my profile short bio intro',
-      location: 'Toronto, ON',
+      bio: 'Write something about yourself!',
+      location: 'Canada',
+      locationCode: 'CA',
       birthday: 'April 20, 1969',
+      wishlists: [],
+      wishes: [],
     };
 
     try {
       const createdUser = await firebase.createUser(user);
-
-      setUser({ ...createdUser, isLoggedIn: true });
+      if (createdUser) {
+        setUser({ ...createdUser, isLoggedIn: true });
+      }
     } catch (error) {
       console.log('Error @signUp: ', error);
     } finally {

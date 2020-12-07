@@ -1,8 +1,10 @@
+import AddWishScreen from '../screens/AddWishScreen';
 import AddWishlistScreen from '../screens/AddWishlistScreen';
 import EditUserInfo from '../screens/EditUserInfo';
 import { Ionicons } from '@expo/vector-icons';
 import ProfileScreen from '../screens/ProfileScreen';
 import React from 'react';
+import WishlistInfoScreen from '../screens/WishlistInfoScreen';
 import WishlistScreen from '../screens/WishlistScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -13,6 +15,7 @@ export default MainStackScreens = () => {
   const ProfileStack = createStackNavigator();
   const tabBarOptions = {
     showLabel: false,
+    keyboardHidesTabBar: true,
   };
 
   const screenOptions = ({ route }) => ({
@@ -46,21 +49,33 @@ export default MainStackScreens = () => {
     <MainStack.Navigator
       tabBarOptions={tabBarOptions}
       screenOptions={screenOptions}
+      initialRouteName='Profile'
     >
       <MainStack.Screen name='Wishlist'>
         {() => (
-          <WishlistStack.Navigator
-            screenOptions={{
-              headerShown: false,
-            }}
-          >
+          <WishlistStack.Navigator>
             <WishlistStack.Screen
               name='MyWishlists'
               component={WishlistScreen}
+              options={{
+                headerShown: false,
+                title: 'Wishlists',
+              }}
             />
             <WishlistStack.Screen
               name='AddWishlist'
               component={AddWishlistScreen}
+              options={{ title: 'Create new wishlist' }}
+            />
+            <WishlistStack.Screen
+              name='AddWish'
+              component={AddWishScreen}
+              options={{ title: 'Create new wish' }}
+            />
+            <WishlistStack.Screen
+              name='WishListInfo'
+              component={WishlistInfoScreen}
+              options={{ title: 'Details' }}
             />
           </WishlistStack.Navigator>
         )}
@@ -71,6 +86,7 @@ export default MainStackScreens = () => {
             screenOptions={{
               headerShown: false,
             }}
+            initialRouteName='Profile'
           >
             <ProfileStack.Screen name='Profile' component={ProfileScreen} />
             <ProfileStack.Screen name='EditUser' component={EditUserInfo} />

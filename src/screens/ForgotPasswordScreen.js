@@ -2,49 +2,19 @@ import React, { useContext, useState } from 'react';
 
 import { FirebaseContext } from '../context/FirebaseContext';
 import Text from '../components/Text';
-import { UserContext } from '../context/UserContext';
 import styled from 'styled-components';
 
 export default SignInScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [loading, setLoading] = useState(false);
+ 
   const firebase = useContext(FirebaseContext);
-  const [_, setUser] = useContext(UserContext);
 
-  const signIn = async () => {
-    setLoading(true);
 
+  const resetPassword = async () => {
     try {
-      await firebase.signIn(email, password);
-
-      const uid = firebase.getCurrentUser().uid;
-
-      const userInfo = await firebase.getUserInfo(uid);
-
-      const wLists = await firebase.getWishlists(uid);
-
-      const wiShes = await firebase.getAllWishes(uid);
-
-      setUser({
-        username: userInfo.username,
-        email: userInfo.email,
-        uid,
-        isLoggedIn: true,
-        profilePhotoUrl: userInfo.profilePhotoUrl,
-        userFirstName: userInfo.userFirstName,
-        userLastName: userInfo.userLastName,
-        bio: userInfo.bio,
-        location: userInfo.location,
-        birthday: userInfo.birthday,
-        locationCode: userInfo.locationCode,
-        wishlists: wLists,
-        wishes: wiShes,
-      });
+      await firebase.passwordReset(email);
     } catch (error) {
       alert(error.message);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -57,7 +27,7 @@ export default SignInScreen = ({ navigation }) => {
       <Main>
         <Text title bold center>
           {' '}
-          G Y F T E R
+        Reset Password
         </Text>
       </Main>
 
@@ -74,45 +44,19 @@ export default SignInScreen = ({ navigation }) => {
             value={email}
           />
         </AuthContainer>
-
-        <AuthContainer>
-          <AuthTitle>Password</AuthTitle>
-          <AuthField
-            autoCapitalize='none'
-            autoCompleteType='password'
-            autoCorrect={false}
-            secureTextEntry={true}
-            onChangeText={(password) => setPassword(password.trim())}
-            value={password}
-          />
-        </AuthContainer>
       </Auth>
 
-      <SignInContainer onPress={signIn} disabled={loading}>
-        {loading ? (
-          <Loading />
-        ) : (
+      <Button onPress={resetPassword}>
           <Text bold center medium>
-            Sign In
+            Send recovery email
           </Text>
-        )}
-      </SignInContainer>
+      </Button>
 
-      <SignUp onPress={() => navigation.navigate('SignUp')}>
-        <Text small center>
-          New to Gyfter?
-          <Text bold color='#8B5FBF'>
-            {' '}
-            Sign Up
+      <Cancel onPress={() => navigation.navigate('SignIn')}>
+          <Text bold center medium color="#fff">
+            Back
           </Text>
-        </Text>
-      </SignUp>
-
-      <PasswordReset onPress={() => navigation.navigate('ForgotPassword')}>
-        <Text small center bold color='#8B5FBF'>
-          Forgot Password?
-        </Text>
-      </PasswordReset>
+      </Cancel>
     </Container>
   );
 };
@@ -123,7 +67,7 @@ const Container = styled.View`
 `;
 
 const Main = styled.View`
-  margin-top: 192px;
+  margin-top: 300px;
 `;
 
 const Auth = styled.View`
@@ -147,8 +91,8 @@ const AuthTitle = styled(Text)`
   font-weight: 300;
 `;
 
-const SignInContainer = styled.TouchableOpacity`
-  margin: 0 32px;
+const Button = styled.TouchableOpacity`
+  margin: 16px 32px;
   height: 48px;
   align-items: center;
   justify-content: center;
@@ -156,27 +100,21 @@ const SignInContainer = styled.TouchableOpacity`
   border-radius: 20px;
 `;
 
-const GoogleAuth = styled.TouchableOpacity`
+const Cancel = styled.TouchableOpacity`
   margin: 16px 32px;
   height: 48px;
   align-items: center;
   justify-content: center;
-  background-color: #4285f4;
+  background-color: #8b5fbf;
   border-radius: 20px;
 `;
+
 
 const Loading = styled.ActivityIndicator.attrs((props) => ({
   color: '#ffffff',
   size: 'small',
 }))``;
 
-const SignUp = styled.TouchableOpacity`
-  margin-top: 16px;
-`;
-
-const PasswordReset = styled.TouchableOpacity`
-  margin-top: 16px;
-`;
 const HeaderGraphic = styled.View`
   position: absolute;
   width: 100%;

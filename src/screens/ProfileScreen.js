@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 
 import { Entypo } from '@expo/vector-icons';
 import { FirebaseContext } from '../context/FirebaseContext';
-import { Text } from 'react-native';
+import Text from '../components/Text';
 import { UserContext } from '../context/UserContext';
 import styled from 'styled-components';
 
@@ -21,7 +21,7 @@ export default ProfileScreen = ({ navigation }) => {
   return (
     <Container>
       <ProfileHeadContainer
-        source={require('../../assets/user_background.jpg')}
+       
       />
       <ProfilePhoto
         source={
@@ -45,10 +45,12 @@ export default ProfileScreen = ({ navigation }) => {
       </BirthdayLocation>
       <DivideLine />
       <Logout onPress={logOut}>
-        <Text>Log Out</Text>
+        <Text large center>
+          Log Out
+        </Text>
       </Logout>
       <Edit onPress={() => navigation.navigate('EditUser')}>
-        <Text>Edit user</Text>
+        <Text medium>Edit user</Text>
       </Edit>
     </Container>
   );
@@ -58,9 +60,10 @@ const Container = styled.View`
   flex: 1;
 `;
 
-const ProfileHeadContainer = styled.Image`
+const ProfileHeadContainer = styled.View`
   height: 133px;
   position: relative;
+  background-color: #8b5fbf;
 `;
 
 const ProfilePhoto = styled.Image`
@@ -121,8 +124,7 @@ const BirthdayLocation = styled.View`
 `;
 
 const UserLocation = styled.Text`
-  margin-right: 50px
-
+  margin-right: 50px;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
@@ -140,15 +142,30 @@ const DivideLine = styled.View`
   left: 5%;
   top: 10px;
 
-  border: 1px solid #e7b1b3;
+  border: 1px solid #8b5fbf;
 `;
 
 const Logout = styled.TouchableOpacity`
-  left: 45%;
-  top: 50%;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 33%;
+  height: 6%;
+  top: 627px;
+  left: 33%;
+  background: #ff708d;
+  border-radius: 26px;
 `;
 
 const Edit = styled.TouchableOpacity`
-  left: 45%;
-  top: 35%;
+
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 91px;
+  height: 35px;
+  left: 70%;
+  top: 150px;
+  background: #ff708d;
+  border-radius: 25px;
 `;

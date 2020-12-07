@@ -1,12 +1,38 @@
 import React, { useContext, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
+import { FirebaseContext } from '../context/FirebaseContext';
 import Text from '../components/Text';
+import { UserContext } from '../context/UserContext';
 import styled from 'styled-components';
 
-export default AddWishlist = () => {
-  const [listName, setListName] = useState();
-  const [listDesc, setListDesc] = useState();
+export default AddWishlist = ({ navigation }) => {
+  // user info
+  const [user, setUser] = useContext(UserContext);
+  const firebase = useContext(FirebaseContext);
+
+  const [listName, setListName] = useState('');
+  const [listDesc, setListDesc] = useState('');
+
+  const addWishlist = async () => {
+    try {
+      const uid = user.uid;
+
+      const added_wishlist = await firebase.createWishlist({
+        listDesc,
+        listName,
+        uid,
+      });
+
+      setUser((state) => {
+        return { ...state, wishlists: [...state.wishlists, added_wishlist] };
+      });
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      navigation.navigate('MyWishlists');
+    }
+  };
 
   return (
     <Container>
@@ -15,19 +41,23 @@ export default AddWishlist = () => {
           Create new wishlist
         </Text>
       </HeaderContainer>
+
       <List>
         <ListContainer>
           <Title>List Name</Title>
-          <ListName
+          <ListField
             onChangeText={(listName) => setListName(listName)}
             value={listName}
-          ></ListName>
+          ></ListField>
+        </ListContainer>
+
+        <ListContainer>
           <Title>List Description</Title>
-          <ListDesc
+          <ListField
             onChangeText={(listDesc) => setListDesc(listDesc)}
             value={listDesc}
-          ></ListDesc>
-          <Create>
+          ></ListField>
+          <Create onPress={addWishlist}>
             <Text>Create</Text>
           </Create>
         </ListContainer>
@@ -35,6 +65,7 @@ export default AddWishlist = () => {
     </Container>
   );
 };
+
 const Create = styled.TouchableOpacity`
   margin: 0 32px;
   top: 35px;
@@ -47,27 +78,25 @@ const Create = styled.TouchableOpacity`
 
 const Container = styled.View`
   flex: 1;
-  padding-top: 64px;
   padding-left: 32px;
 `;
 
 const HeaderContainer = styled.View`
-  flex-direction: row;
-  flex: 1;
+  margin-top: 35px;
 `;
 
 const List = styled.View`
-  margin: 64px 32px 32px;
+  margin: 0px 32px 32px;
 `;
 
 const ListContainer = styled.View`
-  bottom: 90%;
+  margin-bottom: 32px;
   right: 5%;
 `;
 
-const ListName = styled.TextInput`
+const ListField = styled.TextInput`
   border-bottom-color: #8e93a1;
-  border-bottom-width: 0.5px;
+  border-bottom-width: 1px;
   height: 48px;
   font-size: 16px;
 `;
@@ -78,11 +107,4 @@ const Title = styled(Text)`
   text-transform: uppercase;
   font-weight: 300;
   margin-top: 60px;
-`;
-
-const ListDesc = styled.TextInput`
-  border-bottom-color: #8e93a1;
-  border-bottom-width: 0.5px;
-  height: 48px;
-  font-size: 16px;
 `;
