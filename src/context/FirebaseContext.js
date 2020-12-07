@@ -159,6 +159,16 @@ const Firebase = {
           doc.ref.delete();
         });
       });
+
+      const query2 = await db
+        .collection('wishes')
+        .where('wishlistId', '==', id);
+
+      query2.get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          doc.ref.delete();
+        });
+      });
     } catch (error) {
       console.log('Error @deleteWishlist: ', error);
     }

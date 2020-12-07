@@ -6,13 +6,19 @@ import { FirebaseContext } from '../context/FirebaseContext';
 import { UserContext } from '../context/UserContext';
 
 export default AddWish = ({ route, navigation }) => {
-  const { wishlistId } = route.params;
+  const { wishlistId, editOption, obj } = route.params;
   const firebase = useContext(FirebaseContext);
   const [user, setUser] = useContext(UserContext);
 
-  const [wishTitle, setWishTitle] = useState('');
-  const [wishContex, setWishContext] = useState('');
-  const [completed, setCompleted] = useState(false);
+  const [wishTitle, setWishTitle] = useState(
+    editOption == 'create' ? '' : obj.title
+  );
+  const [wishContex, setWishContext] = useState(
+    editOption == 'create' ? '' : obj.context
+  );
+  const [completed, setCompleted] = useState(
+    editOption == 'create' ? false : obj.completed
+  );
 
   const addWish = async () => {
     try {
@@ -25,7 +31,38 @@ export default AddWish = ({ route, navigation }) => {
       });
 
       setUser((state) => {
+        console.log(added_wish);
         return { ...state, wishes: [...state.wishes, added_wish] };
+      });
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      navigation.navigate('WishListInfo', { id: wishlistId });
+    }
+  };
+
+  const updateWish = async () => {
+    const date = Date.now();
+    const save_wish = {
+      wishId: obj.wishId,
+      title: wishTitle,
+      context: wishContex,
+      completed: completed,
+      uid: user.uid,
+      wishlistId: wishlistId,
+      lastEdited: date.toString(),
+    };
+    try {
+      await firebase.updateWishes(save_wish);
+
+      setUser((state) => {
+        return {
+          ...state,
+          wishes: [
+            ...state.wishes.filter((w) => w.wishId != obj.wishId),
+            save_wish,
+          ],
+        };
       });
     } catch (error) {
       alert(error.message);
@@ -80,10 +117,12 @@ export default AddWish = ({ route, navigation }) => {
         }}
         mode='contained'
         onPress={() => {
-          addWish();
+          {
+            editOption == 'create' ? addWish() : updateWish();
+          }
         }}
       >
-        Create
+        {editOption == 'create' ? 'Create' : 'Update'}
       </Button>
     </>
   );

@@ -38,7 +38,7 @@ export default WishlistInfoScreen = ({ route, navigation }) => {
         completed: !item.completed,
         context: item.context,
         title: item.title,
-        lastEdited: date,
+        lastEdited: date.toString(),
         wishId: item.wishId,
       });
 
@@ -77,7 +77,6 @@ export default WishlistInfoScreen = ({ route, navigation }) => {
     } catch (error) {
       alert(error.message);
     } finally {
-      navigation.navigate('MyWishlists');
     }
   };
 
@@ -91,7 +90,15 @@ export default WishlistInfoScreen = ({ route, navigation }) => {
             updateWishes(item);
           }}
         />
-        <RowSingleData onPress={() => {}}>
+        <RowSingleData
+          onPress={() => {
+            navigation.navigate('AddWish', {
+              wishlistId: id,
+              editOption: 'edit',
+              obj: item,
+            });
+          }}
+        >
           <Text bold large>
             {item.title.substring(0, 20).trim() +
               (item.title.length > 11 ? '...' : '')}
@@ -100,11 +107,6 @@ export default WishlistInfoScreen = ({ route, navigation }) => {
             {item.context.substring(0, 20).trim() +
               (item.context.length > 11 ? '...' : '')}
           </Text>
-          {/* <ListHeaderContainer>
-            <ListInfoContainer>
-              
-            </ListInfoContainer>
-          </ListHeaderContainer> */}
         </RowSingleData>
         <DeleteButton
           onPress={() => {
@@ -125,7 +127,11 @@ export default WishlistInfoScreen = ({ route, navigation }) => {
         </Text> */}
         <AddWish
           onPress={() => {
-            navigation.navigate('AddWish', { wishlistId: id });
+            navigation.navigate('AddWish', {
+              wishlistId: id,
+              editOption: 'create',
+              obj: {},
+            });
           }}
         >
           <PlusText>+</PlusText>
