@@ -1,3 +1,4 @@
+import AddWishScreen from '../screens/AddWishScreen';
 import AddWishlistScreen from '../screens/AddWishlistScreen';
 import EditUserInfo from '../screens/EditUserInfo';
 import { Ionicons } from '@expo/vector-icons';
@@ -65,6 +66,11 @@ export default MainStackScreens = () => {
               name='AddWishlist'
               component={AddWishlistScreen}
               options={{ title: 'Create new wishlist' }}
+            />
+            <WishlistStack.Screen
+              name='AddWish'
+              component={AddWishScreen}
+              options={{ title: 'Create new wish' }}
             />
             <WishlistStack.Screen
               name='WishListInfo'

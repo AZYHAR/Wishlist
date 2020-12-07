@@ -1,16 +1,14 @@
-import CircleCheckBox, { LABEL_POSITION } from 'react-native-circle-checkbox';
-import { Feather, MaterialIcons } from '@expo/vector-icons';
-import React, { useContext, useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import React, { useContext, useEffect } from 'react';
 
+import CircleCheckBox from 'react-native-circle-checkbox';
 import { FirebaseContext } from '../context/FirebaseContext';
+import { MaterialIcons } from '@expo/vector-icons';
 import Text from '../components/Text';
 import { UserContext } from '../context/UserContext';
-import { log } from 'react-native-reanimated';
 import styled from 'styled-components';
 
-export default WishlistInfoScreen = (props) => {
-  const id = props.route.params.item.id;
+export default WishlistInfoScreen = ({ route, navigation }) => {
+  const id = route.params.id;
 
   const firebase = useContext(FirebaseContext);
   const [user, setUser] = useContext(UserContext);
@@ -19,7 +17,15 @@ export default WishlistInfoScreen = (props) => {
     .filter((wish) => wish.wishlistId == id)
     .sort((a, b) => (a.lastEdited < b.lastEdited ? 1 : -1));
 
-  var List = () => <Feed data={wishes} renderItem={renderList} />;
+  // console.log(wishes);
+
+  var List = () => (
+    <Feed
+      data={wishes}
+      renderItem={renderList}
+      keyExtractor={(item) => item.wishId}
+    />
+  );
 
   useEffect(() => {
     List = () => <Feed data={wishes} renderItem={renderList} />;
@@ -55,7 +61,6 @@ export default WishlistInfoScreen = (props) => {
     } catch (error) {
       alert(error.message);
     } finally {
-      navigation.navigate('MyWishlists');
     }
   };
 
@@ -120,7 +125,7 @@ export default WishlistInfoScreen = (props) => {
         </Text> */}
         <AddWish
           onPress={() => {
-            navigation.navigate('AddWishlist');
+            navigation.navigate('AddWish', { wishlistId: id });
           }}
         >
           <PlusText>+</PlusText>

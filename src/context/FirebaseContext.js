@@ -193,8 +193,6 @@ const Firebase = {
         id: '',
       };
 
-      console.log(obj);
-
       const { id } = await db.collection('wishlists').add(obj);
 
       await db.collection('wishlists').doc(id).update({ id: id });
@@ -204,6 +202,35 @@ const Firebase = {
       return obj;
     } catch (error) {
       console.log('Error @addWishlist: ', error);
+    }
+  },
+
+  // create wish
+  createWish: async (wish) => {
+    try {
+      const date = new Date();
+
+      var obj = {
+        title: wish.title,
+        context: wish.context,
+        completed: wish.completed,
+        uid: wish.uid,
+        wishlistId: wish.wishlistId,
+        lastEdited: date.toString(),
+        wishId: '',
+      };
+
+      console.log(obj);
+
+      const { id } = await db.collection('wishes').add(obj);
+
+      await db.collection('wishes').doc(id).update({ wishId: id });
+
+      obj.wishId = id;
+
+      return obj;
+    } catch (error) {
+      console.log('Error @addWish: ', error);
     }
   },
 

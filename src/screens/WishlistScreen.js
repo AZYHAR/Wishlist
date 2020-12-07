@@ -93,7 +93,7 @@ export default WishlistScreen = ({ navigation }, props) => {
       >
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('WishListInfo', { item: item })}
+          onPress={() => navigation.navigate('WishListInfo', { id: item.id })}
         >
           <ListHeaderContainer>
             <ListInfoContainer>
