@@ -13,7 +13,7 @@ export default AddWish = ({ route, navigation }) => {
   const [wishTitle, setWishTitle] = useState(
     editOption == 'create' ? '' : obj.title
   );
-  const [wishContex, setWishContext] = useState(
+  const [wishContext, setWishContext] = useState(
     editOption == 'create' ? '' : obj.context
   );
   const [completed, setCompleted] = useState(
@@ -24,7 +24,7 @@ export default AddWish = ({ route, navigation }) => {
     try {
       const added_wish = await firebase.createWish({
         title: wishTitle,
-        context: wishContex,
+        context: wishContext,
         completed: completed,
         uid: user.uid,
         wishlistId: wishlistId,
@@ -46,7 +46,7 @@ export default AddWish = ({ route, navigation }) => {
     const save_wish = {
       wishId: obj.wishId,
       title: wishTitle,
-      context: wishContex,
+      context: wishContext,
       completed: completed,
       uid: user.uid,
       wishlistId: wishlistId,
@@ -86,7 +86,7 @@ export default AddWish = ({ route, navigation }) => {
         style={{ margin: 20, maxHeight: 150 }}
         multiline
         dense
-        value={wishContex}
+        value={wishContext}
         onChangeText={(text) => setWishContext(text)}
         numberOfLines={10}
       />

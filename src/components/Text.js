@@ -10,7 +10,7 @@ const Text = styled.Text`
     margin: ${props => props.margin ?? 0};
     padding: ${props => props.padding ?? 0};
 
-    ${({XL, title, large, medium, small, tiny}) => {
+    ${({XL, title, large, medium2, medium, small, tiny}) => {
         switch(true) {
             case XL: 
                 return `font-size: 48px;`;
@@ -19,7 +19,9 @@ const Text = styled.Text`
         
             case large:
                 return `font-size: 24px;`;
-    
+            
+            case medium2:
+                return `font-size: 20px;`
             case medium:
                 return `font-size: 16px;`;
 

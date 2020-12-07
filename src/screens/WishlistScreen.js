@@ -14,7 +14,7 @@ import Text from '../components/Text';
 import { UserContext } from '../context/UserContext';
 import styled from 'styled-components';
 
-export default WishlistScreen = ({ navigation }, props) => {
+export default WishlistScreen = ({ navigation }) => {
   // get data
   const [user, setUser] = useContext(UserContext);
   const firebase = useContext(FirebaseContext);
@@ -93,11 +93,11 @@ export default WishlistScreen = ({ navigation }, props) => {
       >
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('WishListInfo', { id: item.id })}
+          onPress={() => navigation.navigate('WishListInfo', { id: item.id, listName: item.listName })}
         >
           <ListHeaderContainer>
             <ListInfoContainer>
-              <Text bold large>
+              <Text bold medium2>
                 {item.listName}
               </Text>
               <Text>{item.listDesc}</Text>
@@ -191,7 +191,7 @@ export default WishlistScreen = ({ navigation }, props) => {
           <Text bold large>
             My Wishlists
           </Text>
-        </HeaderContainer>
+       
 
         <AddWishlist
           style={modalVisible ? { backgroundColor: 'rgba(0, 0, 0, 0.5)' } : {}}
@@ -201,6 +201,7 @@ export default WishlistScreen = ({ navigation }, props) => {
         >
           <PlusText>+</PlusText>
         </AddWishlist>
+        </HeaderContainer>
         <FeedContainer>
           <List />
         </FeedContainer>
@@ -312,9 +313,9 @@ const PlusText = styled.Text`
 `;
 
 const HeaderContainer = styled.View`
-  top: 63px;
-  position: absolute;
-  left: 10%;
+  margin: 75px 20px 10px 10px;
+  left: 2%;
+  bottom: 20px;
 `;
 
 const FeedContainer = styled.View`
@@ -327,7 +328,7 @@ const FeedContainer = styled.View`
 
 const AddWishlist = styled.TouchableOpacity`
   position: absolute;
-  width: 80px;
+  width: 100px;
   height: 34px;
 
   top: 9%;

@@ -9,7 +9,7 @@ import styled from 'styled-components';
 
 export default WishlistInfoScreen = ({ route, navigation }) => {
   const id = route.params.id;
-
+  const listName = route.params.listName;
   const firebase = useContext(FirebaseContext);
   const [user, setUser] = useContext(UserContext);
 
@@ -85,7 +85,7 @@ export default WishlistInfoScreen = ({ route, navigation }) => {
       <ListContainer>
         <CircleCheckBox
           checked={item.completed}
-          style={{ postion: 'absolute' }}
+          style={{ position: 'absolute' }}
           onToggle={() => {
             updateWishes(item);
           }}
@@ -99,14 +99,16 @@ export default WishlistInfoScreen = ({ route, navigation }) => {
             });
           }}
         >
-          <Text bold large>
-            {item.title.substring(0, 20).trim() +
-              (item.title.length > 11 ? '...' : '')}
-          </Text>
-          <Text>
-            {item.context.substring(0, 20).trim() +
-              (item.context.length > 11 ? '...' : '')}
-          </Text>
+          <ListHeaderContainer>
+            <ListInfoContainer>
+              <Text bold medium2>
+                {item.title}               
+              </Text>
+              <Text>
+                {item.context}
+              </Text>
+            </ListInfoContainer>
+          </ListHeaderContainer>
         </RowSingleData>
         <DeleteButton
           onPress={() => {
@@ -122,9 +124,9 @@ export default WishlistInfoScreen = ({ route, navigation }) => {
   return (
     <>
       <HeaderContainer>
-        {/* <Text bold large>
-          Wishlist Details
-        </Text> */}
+       <Text bold large>
+          {listName}
+        </Text> 
         <AddWish
           onPress={() => {
             navigation.navigate('AddWish', {
@@ -146,10 +148,8 @@ export default WishlistInfoScreen = ({ route, navigation }) => {
 };
 
 const RowSingleData = styled.TouchableOpacity`
-  position: absolute;
   left: 18%;
-  width: 60%;
-  top: 4px;
+  bottom: 20px;
 `;
 
 const EditButton = styled.TouchableOpacity`
@@ -179,7 +179,8 @@ const DeleteButton = styled.TouchableOpacity`
 `;
 
 const HeaderContainer = styled.View`
-  top: 630px;
+  margin: 50px 20px 10px 10px;
+  left: 2%;
   bottom: 20px;
 `;
 
@@ -189,21 +190,26 @@ const PlusText = styled.Text`
   text-align: center;
 `;
 
+
 const AddWish = styled.TouchableOpacity`
   position: absolute;
-  width: 33%;
+  width: 100px;
   height: 34px;
 
+  top: 9%;
   bottom: 20px;
-  left: 33%;
+  left: 75%;
 
   background: #ff708d;
   border-radius: 26px;
 `;
 
 const FeedContainer = styled.View`
-  height: 87%;
+  height: 79%;
+  top: 55px;
   bottom: 20px;
+  width: 100%;
+  position: absolute;
 `;
 
 const Feed = styled.FlatList`
@@ -218,12 +224,12 @@ const ListContainer = styled.View`
   border-radius: 6px;
   padding: 20px;
   flex: 1;
+  
 `;
 
 const ListHeaderContainer = styled.View``;
 
 const ListInfoContainer = styled.View`
   flex: 1;
-  margin: 0 16px;
-  top: 10px;
+  width: 60%;
 `;
