@@ -401,7 +401,7 @@ const SaveUserData = styled.TouchableOpacity`
   left: 33%;
   width: 33%;
   height: 55px;
-  top: 627px;
+  top: 500px;
 
   background: #ff708d;
   border-radius: 26px;
