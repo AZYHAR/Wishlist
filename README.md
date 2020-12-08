@@ -60,13 +60,12 @@ If you have an Android device, you can access the app from the expo server using
 <br/>
 <p>
 <img src="https://user-images.githubusercontent.com/46607923/101447695-ba601700-38f3-11eb-8776-71aa4c5a8aac.gif" width="325" height="665"/>
+<img src="https://user-images.githubusercontent.com/46607923/101448503-21ca9680-38f5-11eb-91e4-12c00195a5b8.PNG" width="325" height="665"/>
+
 <img src="https://user-images.githubusercontent.com/46607923/101448056-64d83a00-38f4-11eb-8035-d8feb19f1125.PNG" width="325" height="665"/>
 <img src="https://user-images.githubusercontent.com/46607923/101448507-22fbc380-38f5-11eb-8862-47b0387883c2.PNG" width="325" height="665"/>
-<img src="https://user-images.githubusercontent.com/46607923/101448503-21ca9680-38f5-11eb-91e4-12c00195a5b8.PNG" width="325" height="665"/>
 <img src="https://user-images.githubusercontent.com/46607923/101448057-6570d080-38f4-11eb-8030-b256365c7da3.PNG" width="325" height="665"/>
 <img src="https://user-images.githubusercontent.com/46607923/101448060-66096700-38f4-11eb-8448-60f5c8456d17.PNG" width="325" height="665"/>
-
-
 <img src="https://user-images.githubusercontent.com/46607923/101448508-22fbc380-38f5-11eb-93dc-c3326a000991.PNG" width="325" height="665"/>
  
   </p>
