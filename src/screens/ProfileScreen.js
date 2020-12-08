@@ -151,7 +151,7 @@ const Logout = styled.TouchableOpacity`
   position: absolute;
   width: 33%;
   height: 6%;
-  top: 627px;
+  top: 50%;
   left: 33%;
   background: #ff708d;
   border-radius: 26px;
