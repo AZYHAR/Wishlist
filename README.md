@@ -21,10 +21,13 @@ Users can create wishlists and add wishes to it, which are then stored securely 
 * Create Wishes
 * Edit and Delete Wishes
 
-## 
+## Components 
 * React Navigation
 * FlatList
 * styled-components
+* Firebase authentication
+* React Hooks
+
 ## Requirements
 * NodeJS
 * Expo
