@@ -6,7 +6,8 @@
 </p>
 
 ## App Description
-
+Gyfter is a cross-platform wishlist application built using react-native and firestore. User authentication is implemented using Firebase. <br/>
+Users can create wishlists and add wishes to it, which are then stored securely in Firestore. 
 ## Setup
 
 1. Clone and install dependencies: <br/>
