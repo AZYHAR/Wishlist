@@ -31,4 +31,6 @@ $ expo start
 To run on a physical device, download expo client app from App Store or Play Store. <br/>
 Once expo opens up the browser, scan the QR code avaialable on the browser screen. <br/>
 <br/>
-To run on an emulator, once the browser opens up, select 'Run on Android device/emulator' or 'Run on iOS simulator'. This willl open up the app on the emulator.
+To run on an emulator, once the browser opens up, select 'Run on Android device/emulator' or 'Run on iOS simulator'. This willl open up the app on the emulator. <br/>
+<br/>
+If you have an Android device, you can access the app from the expo server using the following link: https://expo.io/@gyfter/projects/Gyfter
